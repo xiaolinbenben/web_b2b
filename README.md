@@ -19,8 +19,8 @@
 
 ## 关键技术
 
-- 前端技术栈 ES6、vue、vuex、vue-router、vue-cli、axios、antd
-- 后端技术栈 Python、Django、pip
+- 前端技术栈 ES6、React、nextjs、react-router、axios、antd、tailwindcss
+- 后端技术栈 Python、Django、djangorestframework、pip
 
 
 
