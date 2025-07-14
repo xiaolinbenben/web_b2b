@@ -8,25 +8,6 @@
 
 演示地址：[https://010.fktool.com](https://010.fktool.com)
 
-## 主要功能
-
-- 鲜花管理：管理系统可以录入、修改和查询鲜花的基本信息，如名称、价格、颜色、备注等。
-- 类型管理：系统可以管理鲜花的类型信息，包括类型的名称等。
-- 评论管理：管理和浏览整个网站的评论信息。
-- 用户管理：管理和浏览网站的用户信息，可以新增、编辑和删除用户。
-- 统计分析：系统可以根据鲜花的活动数据和用户参与度进行统计和分析，帮助管理员了解整个系统的状况。
-- 消息管理：鲜花管理员可以在系统上发布消息，整个网站的用户都能收到。
-- 广告管理：鲜花管理员可以在系统上发布广告消息，然后在详情页面右侧展示。
-- 意见反馈：鲜花管理员可以在后台查看浏览用户提交的意见反馈信息。
-- 系统信息：管理员可以查看系统的基本信息，包括系统名称、服务器信息、内存信息、cpu信息、软件信息等。
-- 注册登录：用户通过注册和登录后，才能使用网站。
-- 门户浏览：用户进入首页后，可以浏览鲜花列表信息，包括最新、最热。
-- 热门推荐：基于协同过滤推荐算法的热门推荐。
-- 用户中心：包括用户基本资料修改、用户基本信息、密码、收藏点赞等。
-- 我的订单：包括我购买的鲜花的订单信息。
-- 意见反馈：包括用户提交意见反馈的入口页面。
-- 模糊搜索：顶部搜索功能，支持模糊搜索鲜花信息。
-- 鲜花评论：详情页下侧用户可以评论鲜花。
 
 ## 开发环境
 
@@ -77,7 +58,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'python_db',   # 您的数据库
         'USER': 'root',        # 您的用户名
-        'PASSWORD': '4643830', # 您的密码
+        'PASSWORD': 'xxxxx', # 您的密码
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -98,22 +79,90 @@ python manage.py runserver
 ```
 npm install 
 ```
-(2) 运行项目
+(2) 构建项目
 ```
-npm run dev
+npm run build
 ```
 
-然后访问前端地址。即可
+### nginx配置
+
+```
+server {
+    listen       80;
+    server_name  xxxxx.com www.xxxxx.com;
 
 
-## 开发文档
+    location /upload/ {
+        access_log off;
+        log_not_found off;
+        alias /var/xxxxx/server/upload/;
+        add_header Cache-Control "public, max-age=90";
+    }
+     
+    # ico文件
+    location /favicon.ico {
+        access_log off;
+        log_not_found off;
+        alias /var/xxxxx/server/upload/img/favicon.ico;
+        add_header Cache-Control "public, max-age=90";
+    }
 
-[点击进入](doc/doc.md)
+    # django代理
+    location /myapp/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+	proxy_set_header X-Real-IP $remote_addr; # 获取客户端真实 IP
+	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # 获取代理链中的真实 IP
+	proxy_set_header X-Forwarded-Proto $scheme; # 获取协议（http 或 https）
+	client_max_body_size 100M; # 上传限制
+
+    }
+
+    location /_next/image {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        add_header Cache-Control "public, max-age=31536000";
+    }
+
+    location /_next/static {
+        proxy_pass http://127.0.0.1:3000;
+        access_log off;
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # 开发环境hmr
+    location /_next/webpack-hmr {
+	    proxy_pass http://127.0.0.1:3000;
+	    proxy_http_version 1.1;
+	    proxy_set_header Upgrade $http_upgrade;
+	    proxy_set_header Connection "upgrade";
+	    proxy_set_header Host $host;
+	    proxy_cache_bypass $http_upgrade;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+```
 
 
-## 付费咨询
+
+
+
+## 技术咨询
 
 微信（Lengqin1024）
+
 
 ## 常见问题
 
