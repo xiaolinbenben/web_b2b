@@ -83,6 +83,10 @@ npm install
 ```
 npm run build
 ```
+(3) 运行
+```
+npm run start
+```
 
 ### nginx配置
 
