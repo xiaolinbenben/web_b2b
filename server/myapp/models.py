@@ -189,10 +189,10 @@ class BasicSite(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and BasicSite.objects.exists():
@@ -232,10 +232,10 @@ class BasicTdk(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and BasicTdk.objects.exists():
@@ -259,10 +259,10 @@ class BasicBanner(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and BasicBanner.objects.exists():
@@ -290,10 +290,10 @@ class BasicGlobal(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and BasicGlobal.objects.exists():
@@ -329,10 +329,10 @@ class BasicAdditional(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and BasicAdditional.objects.exists():
@@ -371,10 +371,10 @@ class About(models.Model):
 
     @classmethod
     def get_solo(cls):
-        try:
-            return cls.objects.get()
-        except ObjectDoesNotExist:
-            return None
+        instance = cls.objects.first()
+        if instance is None:
+            instance = cls.objects.create()
+        return instance
 
     def save(self, *args, **kwargs):
         if not self.pk and About.objects.exists():
