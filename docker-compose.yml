@@ -29,6 +29,12 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:8524}
+        NEXT_PUBLIC_DJANGO_BASE_URL: ${NEXT_PUBLIC_DJANGO_BASE_URL:-http://localhost:8524/api}
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
+        NEXT_PUBLIC_IMAGE_DOMAINS: ${NEXT_PUBLIC_IMAGE_DOMAINS:-localhost}
+        NEXT_PUBLIC_TEMPLATE_ID: ${NEXT_PUBLIC_TEMPLATE_ID:-001}
     env_file:
       - ${ENV_FILE:-env.local}
     environment:
