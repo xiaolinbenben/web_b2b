@@ -104,8 +104,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'web_b2b',
         'USER': 'root',
-        'PASSWORD': '4643830',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'F29A99E8-4E64-4728-813A-3725EDBAF376',
+        'HOST': 'localhost',
         'PORT': '3306',
         'CONN_MAX_AGE': 60,  # 连接复用时间
         'OPTIONS': {
