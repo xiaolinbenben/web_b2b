@@ -97,12 +97,12 @@ export default function Footer({sectionData}) {
                     <div
                         className="flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 pt-8">
                         <div className="flex flex-col text-sm text-gray-500 mb-4 sm:mb-0">
-                            <p>&copy; {new Date().getFullYear()} {sectionData.contactData.global_company_name}.
+                            <p>&copy; {new Date().getFullYear()} {sectionData.contactData.global_company_name} 
                                 {lang.AllRightsReserved}
                             </p>
                             <p className="mt-1">Powered by <a href="https://fktool.com" target="_blank"
                                                               rel="noopener noreferrer"
-                                                              className="text-gray-500 hover:text-mainColorDeep">FK</a>
+                                                              className="text-gray-500 hover:text-mainColorDeep">Mr.Lin</a>
                             </p>
                         </div>
                         <div className="flex flex-wrap justify-center space-x-4">
