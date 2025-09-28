@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  web-b2b-backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file:
+      - prod.env
+    environment:
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-false}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-shop.beisi.tech}
+      DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL:-INFO}
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-web_b2b}
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-}
+      BASE_HOST_URL: ${BASE_HOST_URL:-https://shop.beisi.tech}
+      DJANGO_CORS_ALLOWED_ORIGINS: ${DJANGO_CORS_ALLOWED_ORIGINS:-https://shop.beisi.tech}
+      DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS:-https://shop.beisi.tech}
+    volumes:
+      - ./server/upload:/app/upload
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - beisi-shared-network
+
+  web-b2b-frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    env_file:
+      - prod.env
+    environment:
+      NODE_ENV: production
+      PORT: ${NEXT_PORT:-80}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://shop.beisi.tech}
+      NEXT_PUBLIC_DJANGO_BASE_URL: ${NEXT_PUBLIC_DJANGO_BASE_URL:-https://shop.beisi.tech/api}
+      NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
+    expose:
+      - "80"
+    restart: unless-stopped
+    networks:
+      - beisi-shared-network
+
+networks:
+  beisi-shared-network:
+    external: true
+    name: beisi-shared-network

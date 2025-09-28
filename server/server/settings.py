@@ -9,48 +9,55 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import environ
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sz@madp0ifx!b)^lg_g!f+5s*w7w_=sjgq-k+erzb%x42$^r!d'
+env = environ.Env(
+    DJANGO_DEBUG=(bool, True),
+    DJANGO_SECRET_KEY=(str, 'django-insecure-sz@madp0ifx!b)^lg_g!f+5s*w7w_=sjgq-k+erzb%x42$^r!d'),
+    DJANGO_LOG_LEVEL=(str, 'INFO'),
+    DB_NAME=(str, 'web_b2b'),
+    DB_USER=(str, 'root'),
+    DB_PASSWORD=(str, 'F29A99E8-4E64-4728-813A-3725EDBAF376'),
+    DB_HOST=(str, 'localhost'),
+    DB_PORT=(int, 3306),
+    DB_CONN_MAX_AGE=(int, 60),
+    BASE_HOST_URL=(str, 'http://mytest.com'),
+    DJANGO_CORS_ALLOW_ALL_ORIGINS=(bool, False),
+    DJANGO_CORS_ALLOW_CREDENTIALS=(bool, False),
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+env_file = BASE_DIR / '.env'
+if env_file.exists():
+    env.read_env(env_file)
+
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = env('DJANGO_DEBUG')
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mytest.com', '127.0.0.1'])
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'info.log'),
+        'console': {
+            'class': 'logging.StreamHandler',
         },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': env('DJANGO_LOG_LEVEL'),
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
-            'level': 'INFO',
+            'handlers': ['console'],
+            'level': env('DJANGO_LOG_LEVEL'),
             'propagate': True,
         },
     },
 }
-
-
-ALLOWED_HOSTS = [
-    'mytest.com',
-    '127.0.0.1'
-]
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -96,27 +103,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'web_b2b',
-        'USER': 'root',
-        'PASSWORD': 'F29A99E8-4E64-4728-813A-3725EDBAF376',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'CONN_MAX_AGE': 60,  # 连接复用时间
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': str(env('DB_PORT')),
+        'CONN_MAX_AGE': env('DB_CONN_MAX_AGE'),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET NAMES 'utf8mb4'",
         }
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -133,63 +134,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
-
 LANGUAGE_CODE = 'zh-hans'
-
-# 时区
 TIME_ZONE = 'Asia/Shanghai'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = False
 
-# 日期时间格式
 DATE_FORMAT = 'Y-m-d'
 DATETIME_FORMAT = 'Y-m-d H:i:s'
 
-# 上传文件路径
-# 并在urls.py配置+static
-MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+MEDIA_ROOT = BASE_DIR / 'upload'
 MEDIA_URL = '/upload/'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 跨域配置
-CORS_ALLOW_CREDENTIALS = False
-CORS_ORIGIN_ALLOW_ALL = False  # 3.x之前写法
-CORS_ALLOW_ALL_ORIGINS = False  # 3.3以上写法
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOW_CREDENTIALS = env('DJANGO_CORS_ALLOW_CREDENTIALS')
+CORS_ORIGIN_ALLOW_ALL = env('DJANGO_CORS_ALLOW_ALL_ORIGINS')
+CORS_ALLOW_ALL_ORIGINS = env('DJANGO_CORS_ALLOW_ALL_ORIGINS')
+CORS_ALLOWED_ORIGINS = env.list('DJANGO_CORS_ALLOWED_ORIGINS', default=[])
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=[])
 
-
-# django上传文件限制 (内存阈值)
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 
-# 图片尺寸
 CDN_IMAGE_UPLOAD_SIZE = 10 * 1024 * 2024
-# 视频尺寸
 CDN_VIDEO_UPLOAD_SIZE = 500 * 1024 * 2024
-# 普通文件尺寸
 CDN_FILE_UPLOAD_SIZE = 500 * 1024 * 2024
 
-# smtp设置
 SMTP_SERVER = 'smtp.qq.com'
 SENDER_EMAIL = '285126081@qq.com'
 SENDER_PASS = 'xxxxxxxxxxxxxxxxxxxxx'
 
-# 域名
-# BASE_HOST_URL = 'http://127.0.0.1:8000'
-BASE_HOST_URL = 'http://mytest.com'
+BASE_HOST_URL = env('BASE_HOST_URL')
