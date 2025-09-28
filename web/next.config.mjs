@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const imageDomains = (process.env.NEXT_PUBLIC_IMAGE_DOMAINS || '').split(',').map(domain => domain.trim()).filter(Boolean);
+
 const nextConfig = {
     basePath: '', // 设置统一前缀如/en
     assetPrefix: '', // 静态资源前缀
@@ -12,7 +14,7 @@ const nextConfig = {
         NEXT_PUBLIC_CLOUDINARY_PRESET_NAME: "fi0lxkc1",
     },
     images: {
-        domains: [process.env.NEXT_PUBLIC_HOST],
+        domains: imageDomains,
     },
     swcMinify: true,
     compiler: {

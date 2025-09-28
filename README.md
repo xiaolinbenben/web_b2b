@@ -187,6 +187,5 @@ server {
 
 ## Docker Compose ʹ��
 
-- `ENV_FILE=env.local docker compose --env-file env.local up -d --build`
-- `ENV_FILE=env.production docker compose --env-file env.production up -d --build`
-- ֹͣ`ENV_FILE=env.local docker compose down`
+- `docker compose --env-file env.local up -d --build`
+- `docker compose --env-file env.production up -d --build`
