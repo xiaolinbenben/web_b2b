@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 
 const imageDomains = (process.env.NEXT_PUBLIC_IMAGE_DOMAINS || '').split(',').map(domain => domain.trim()).filter(Boolean);
+const imageRemotePatterns = imageDomains.flatMap(domain => ([
+    { protocol: 'http', hostname: domain, pathname: '/**' },
+    { protocol: 'https', hostname: domain, pathname: '/**' }
+]));
 
 const nextConfig = {
     basePath: '', // 设置统一前缀如/en
@@ -15,6 +19,8 @@ const nextConfig = {
     },
     images: {
         domains: imageDomains,
+        remotePatterns: imageRemotePatterns,
+        unoptimized: true,
     },
     swcMinify: true,
     compiler: {
