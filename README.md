@@ -183,7 +183,7 @@ server {
 
 **4. 后台管理的默认账号密码是？**
 
-答：管理员账号密码是：admin123 / admin123
+答：管理员账号密码是：admin / admin123
 
 ## Docker Compose 使用
 
