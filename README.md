@@ -184,3 +184,9 @@ server {
 **4. 后台管理的默认账号密码是？**
 
 答：管理员账号密码是：admin123 / admin123
+
+## Docker Compose ʹ��
+
+- `ENV_FILE=env.local docker compose --env-file env.local up -d --build`
+- `ENV_FILE=env.production docker compose --env-file env.production up -d --build`
+- ֹͣ`ENV_FILE=env.local docker compose down`

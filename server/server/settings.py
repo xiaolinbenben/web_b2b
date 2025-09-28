@@ -22,10 +22,10 @@ env = environ.Env(
     DB_NAME=(str, 'web_b2b'),
     DB_USER=(str, 'root'),
     DB_PASSWORD=(str, 'F29A99E8-4E64-4728-813A-3725EDBAF376'),
-    DB_HOST=(str, 'localhost'),
+    DB_HOST=(str, 'mysql'),
     DB_PORT=(int, 3306),
     DB_CONN_MAX_AGE=(int, 60),
-    BASE_HOST_URL=(str, 'http://mytest.com'),
+    BASE_HOST_URL=(str, 'http://localhost:8524'),
     DJANGO_CORS_ALLOW_ALL_ORIGINS=(bool, False),
     DJANGO_CORS_ALLOW_CREDENTIALS=(bool, False),
 )
@@ -36,7 +36,7 @@ if env_file.exists():
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env('DJANGO_DEBUG')
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mytest.com', '127.0.0.1'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0'])
 
 LOGGING = {
     'version': 1,
@@ -154,8 +154,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_CREDENTIALS = env('DJANGO_CORS_ALLOW_CREDENTIALS')
 CORS_ORIGIN_ALLOW_ALL = env('DJANGO_CORS_ALLOW_ALL_ORIGINS')
 CORS_ALLOW_ALL_ORIGINS = env('DJANGO_CORS_ALLOW_ALL_ORIGINS')
-CORS_ALLOWED_ORIGINS = env.list('DJANGO_CORS_ALLOWED_ORIGINS', default=[])
-CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=[])
+CORS_ALLOWED_ORIGINS = env.list('DJANGO_CORS_ALLOWED_ORIGINS', default=['http://localhost:8524'])
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=['http://localhost:8524'])
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
