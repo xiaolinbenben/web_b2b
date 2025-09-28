@@ -10,6 +10,9 @@ RUN apt-get update \
         build-essential \
         libjpeg-dev \
         zlib1g-dev \
+        libssl-dev \
+        libffi-dev \
+        pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt ./

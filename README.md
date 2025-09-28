@@ -185,7 +185,7 @@ server {
 
 答：管理员账号密码是：admin123 / admin123
 
-## Docker Compose ʹ��
+## Docker Compose 使用
 
 - `docker compose --env-file env.local up -d --build`
 - `docker compose --env-file env.production up -d --build`
