@@ -189,3 +189,5 @@ server {
 
 - `docker compose --env-file env.local up -d --build`
 - `docker compose --env-file env.production up -d --build`
+- `docker compose --env-file env.local down`
+- `docker compose --env-file env.production down`
