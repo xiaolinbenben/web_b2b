@@ -1,0 +1,26 @@
+{
+  "components/admin/faq/faqModal.jsx -> /src/components/admin/wangEditor.jsx": {
+    "id": 57320,
+    "files": [
+      "static/css/ec0c42b93e70c2e6.css",
+      "static/chunks/b2f0368f.1d0487a27fdc522c.js",
+      "static/chunks/7320.a947434b95e7bf2c.js"
+    ]
+  },
+  "components/admin/news/newsModal.jsx -> /src/components/admin/wangEditor.jsx": {
+    "id": 57320,
+    "files": [
+      "static/css/ec0c42b93e70c2e6.css",
+      "static/chunks/b2f0368f.1d0487a27fdc522c.js",
+      "static/chunks/7320.a947434b95e7bf2c.js"
+    ]
+  },
+  "components/admin/product/productModal.jsx -> /src/components/admin/wangEditor.jsx": {
+    "id": 57320,
+    "files": [
+      "static/css/ec0c42b93e70c2e6.css",
+      "static/chunks/b2f0368f.1d0487a27fdc522c.js",
+      "static/chunks/7320.a947434b95e7bf2c.js"
+    ]
+  }
+}
