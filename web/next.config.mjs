@@ -6,6 +6,9 @@ const imageRemotePatterns = imageDomains.flatMap(domain => ([
     { protocol: 'https', hostname: domain, pathname: '/**' }
 ]));
 
+const INTERNAL_BACKEND_ORIGIN = (process.env.NEXT_INTERNAL_BACKEND_ORIGIN || 'http://web-b2b-backend').replace(/\/$/, '');
+const INTERNAL_MEDIA_ORIGIN = (process.env.NEXT_INTERNAL_MEDIA_ORIGIN || INTERNAL_BACKEND_ORIGIN).replace(/\/$/, '');
+
 const nextConfig = {
     basePath: '', // 设置统一前缀如/en
     assetPrefix: '', // 静态资源前缀
@@ -56,6 +59,18 @@ const nextConfig = {
     ],
     poweredByHeader: false,
     compress: true,
+    async rewrites() {
+        return [
+            {
+                source: '/myapp/:path*',
+                destination: `${INTERNAL_BACKEND_ORIGIN}/myapp/:path*`,
+            },
+            {
+                source: '/upload/:path*',
+                destination: `${INTERNAL_MEDIA_ORIGIN}/upload/:path*`,
+            },
+        ];
+    },
 };
 
 export default nextConfig;
