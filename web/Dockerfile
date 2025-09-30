@@ -16,9 +16,9 @@ ENV NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}
 ENV NEXT_PUBLIC_IMAGE_DOMAINS=${NEXT_PUBLIC_IMAGE_DOMAINS}
 ENV NEXT_PUBLIC_TEMPLATE_ID=${NEXT_PUBLIC_TEMPLATE_ID}
 
-COPY dist/standalone ./.next/standalone
+COPY dist/standalone ./
 COPY dist/static ./.next/static
 COPY public ./public
 
 EXPOSE 80
-CMD ["node", ".next/standalone/server.js"]
+CMD ["node", "server.js"]
