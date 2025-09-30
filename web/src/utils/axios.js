@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const normalizedBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || '').replace(/\/$/, '');
+
 // 创建 axios 实例
 const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL: normalizedBaseUrl || undefined,
     timeout: 15000, // 设置请求超时时间
     headers: {
         'Content-Type': 'application/json',
@@ -14,7 +16,7 @@ axiosInstance.interceptors.request.use(
     (config) => {
         // 在发送请求之前添加 token 等信息
         if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('admintoken'); // 假设 token 存储在 localStorage
+            const token = localStorage.getItem('admintoken'); // 假设 token 存储于 localStorage
             config.headers.ADMINTOKEN = token || '';
         }
 
@@ -40,8 +42,8 @@ axiosInstance.interceptors.response.use(
                 console.error('未授权，请重新登录');
                 localStorage.removeItem('admintoken');
                 localStorage.removeItem('username');
-                // 例如，重定向到登录页面
-                let bp = process.env.NEXT_PUBLIC_BASE_PATH || ''
+                // 例如，重定向到登录页
+                const bp = process.env.NEXT_PUBLIC_BASE_PATH || '';
                 window.location.href = bp + '/adminLogin';
             }
             // 处理其他响应错误
@@ -51,6 +53,5 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
 
 export default axiosInstance;
