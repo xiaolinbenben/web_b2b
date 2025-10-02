@@ -1,17 +1,17 @@
 /*
- Navicat Premium Data Transfer
+ Navicat Premium Dump SQL
 
- Source Server         : localhost_3306
+ Source Server         : local-beisi-db
  Source Server Type    : MySQL
- Source Server Version : 50744
+ Source Server Version : 80043 (8.0.43)
  Source Host           : localhost:3306
- Source Schema         : python_my
+ Source Schema         : web_b2b
 
  Target Server Type    : MySQL
- Target Server Version : 50744
+ Target Server Version : 80043 (8.0.43)
  File Encoding         : 65001
 
- Date: 14/07/2025 10:45:45
+ Date: 28/09/2025 21:53:08
 */
 
 SET NAMES utf8mb4;
@@ -22,11 +22,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE `auth_group`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `name`(`name` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of auth_group
@@ -37,12 +37,12 @@ CREATE TABLE `auth_group`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group_permissions`;
 CREATE TABLE `auth_group_permissions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `auth_group_permissions_group_id_permission_id_0cd325b0_uniq`(`group_id`, `permission_id`) USING BTREE,
-  INDEX `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm`(`permission_id`) USING BTREE,
+  UNIQUE INDEX `auth_group_permissions_group_id_permission_id_0cd325b0_uniq`(`group_id` ASC, `permission_id` ASC) USING BTREE,
+  INDEX `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -56,12 +56,12 @@ CREATE TABLE `auth_group_permissions`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE `auth_permission`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content_type_id` int(11) NOT NULL,
+  `content_type_id` int NOT NULL,
   `codename` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq`(`content_type_id`, `codename`) USING BTREE,
+  UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq`(`content_type_id` ASC, `codename` ASC) USING BTREE,
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -170,7 +170,7 @@ INSERT INTO `auth_permission` VALUES (96, 'Can view advantage', 24, 'view_advant
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user`;
 CREATE TABLE `auth_user`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `last_login` datetime(6) NULL DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
@@ -182,8 +182,8 @@ CREATE TABLE `auth_user`  (
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `username`(`username` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of auth_user
@@ -194,15 +194,15 @@ CREATE TABLE `auth_user`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user_groups`;
 CREATE TABLE `auth_user_groups`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `auth_user_groups_user_id_group_id_94350c0c_uniq`(`user_id`, `group_id`) USING BTREE,
-  INDEX `auth_user_groups_group_id_97559544_fk_auth_group_id`(`group_id`) USING BTREE,
+  UNIQUE INDEX `auth_user_groups_user_id_group_id_94350c0c_uniq`(`user_id` ASC, `group_id` ASC) USING BTREE,
+  INDEX `auth_user_groups_group_id_97559544_fk_auth_group_id`(`group_id` ASC) USING BTREE,
   CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of auth_user_groups
@@ -213,12 +213,12 @@ CREATE TABLE `auth_user_groups`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user_user_permissions`;
 CREATE TABLE `auth_user_user_permissions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `permission_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq`(`user_id`, `permission_id`) USING BTREE,
-  INDEX `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm`(`permission_id`) USING BTREE,
+  UNIQUE INDEX `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq`(`user_id` ASC, `permission_id` ASC) USING BTREE,
+  INDEX `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -232,7 +232,7 @@ CREATE TABLE `auth_user_user_permissions`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_about`;
 CREATE TABLE `b_about`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `about_introduction` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `about_cover` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -248,7 +248,7 @@ INSERT INTO `b_about` VALUES (1, 'At the heart of [Your Company Name] is an exce
 -- ----------------------------
 DROP TABLE IF EXISTS `b_advantage`;
 CREATE TABLE `b_advantage`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `advantage_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `advantage_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `advantage_description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -270,7 +270,7 @@ INSERT INTO `b_advantage` VALUES (7, '1747478349368.jpg', 'One-Stop Services', '
 -- ----------------------------
 DROP TABLE IF EXISTS `b_basic_additional`;
 CREATE TABLE `b_basic_additional`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `additional_mission` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `global_addition_about_image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `global_addition_company_image` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -304,7 +304,7 @@ INSERT INTO `b_basic_additional` VALUES (1, 'Our mission is to revolutionize the
 -- ----------------------------
 DROP TABLE IF EXISTS `b_basic_banner`;
 CREATE TABLE `b_basic_banner`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `banner_home` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `banner_product` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `banner_about` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -326,7 +326,7 @@ INSERT INTO `b_basic_banner` VALUES (1, '1745460011834.jpg#1745460019136.jpg', '
 -- ----------------------------
 DROP TABLE IF EXISTS `b_basic_global`;
 CREATE TABLE `b_basic_global`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `global_phone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `global_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `global_company_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -345,14 +345,14 @@ CREATE TABLE `b_basic_global`  (
 -- ----------------------------
 -- Records of b_basic_global
 -- ----------------------------
-INSERT INTO `b_basic_global` VALUES (1, '+86-17801460534', 'kefu308@gmail.com', 'Blueheart Technology of Zhejiang  Ltd.', 'No. 2875 Beichen West Road, Shaoxing, Zhejiang, China', 'lengqin1024', 'https://facebook.com/java1024', 'https://twitter.com/hello', 'https://linkedin.com/in/java1024', 'https://wa.me/1234567890', 'https://youtube.com/', 'https://instagram.com/', '1746598578851.jpg');
+INSERT INTO `b_basic_global` VALUES (1, '+86 15715077455', 'xiaolinbenben@gmail.com', 'Fuzhou Beisi Network Technology Co., Ltd. ', 'Fuzhou City, Fujian Province, China', '__2young2simple__', 'https://facebook.com/bescreator', 'https://twitter.com/bes_sneaker', 'https://linkedin.com/in/java1024', 'https://wa.me/1234567890', 'https://youtube.com/@beisi-marlin', 'https://instagram.com/', '1746598578851.jpg');
 
 -- ----------------------------
 -- Table structure for b_basic_site
 -- ----------------------------
 DROP TABLE IF EXISTS `b_basic_site`;
 CREATE TABLE `b_basic_site`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `site_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `site_nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -375,14 +375,14 @@ CREATE TABLE `b_basic_site`  (
 -- ----------------------------
 -- Records of b_basic_site
 -- ----------------------------
-INSERT INTO `b_basic_site` VALUES (2, '1', 'B2B外贸演示站', 'BlueTech', 'logo.png', 'favicon.ico', '', '22222', '', '1', '2', '1', '2', '2', '2', '1', '359000');
+INSERT INTO `b_basic_site` VALUES (2, '1', 'Swift Shoes Store', 'BeisiTech', 'logo.png', 'favicon.ico', '', '22222', '', '1', '2', '1', '2', '2', '2', '1', '359000');
 
 -- ----------------------------
 -- Table structure for b_basic_tdk
 -- ----------------------------
 DROP TABLE IF EXISTS `b_basic_tdk`;
 CREATE TABLE `b_basic_tdk`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `tdk_home_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tdk_home_keywords` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tdk_home_description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -420,7 +420,7 @@ INSERT INTO `b_basic_tdk` VALUES (1, '', '', 'Explore our international e-commer
 -- ----------------------------
 DROP TABLE IF EXISTS `b_case`;
 CREATE TABLE `b_case`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `cover` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
@@ -429,7 +429,7 @@ CREATE TABLE `b_case`  (
   `seo_keywords` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
+  `pv` int NOT NULL,
   `client` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -458,36 +458,32 @@ INSERT INTO `b_case` VALUES (18, 'Customer Success Story Highlight', '1747121224
 -- ----------------------------
 DROP TABLE IF EXISTS `b_category`;
 CREATE TABLE `b_category`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `pid` bigint(20) NOT NULL,
+  `pid` bigint NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `sort` int(11) NOT NULL,
+  `sort` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of b_category
 -- ----------------------------
-INSERT INTO `b_category` VALUES (7, '分类444', '1747127411294.jpg', -1, '2025-03-12 11:30:03.452116', 3);
+INSERT INTO `b_category` VALUES (7, 'Unbelievable Shoes', '1747127411294.jpg', -1, '2025-03-12 11:30:03.452116', 3);
 INSERT INTO `b_category` VALUES (8, 'Very Good Very Good Hello  With Me', '1747127404721.jpg', -1, '2025-03-12 11:30:06.944356', 2);
 INSERT INTO `b_category` VALUES (40, 'We Are from USA', '1747127398455.jpg', -1, '2025-04-02 14:27:59.442669', 1);
 INSERT INTO `b_category` VALUES (41, 'Very Good Hello  Great', '1745460949926.jpg', -1, '2025-04-02 14:28:02.213774', 0);
 INSERT INTO `b_category` VALUES (42, 'Great Apple Great Apple Great', '1747899216089.jpg', -1, '2025-05-15 21:17:10.990090', 0);
 INSERT INTO `b_category` VALUES (43, 'hhh', '1747379274802.png', 42, '2025-05-16 15:07:55.949386', 0);
-INSERT INTO `b_category` VALUES (44, 'helllo', '1747382537173.ico', 42, '2025-05-16 16:02:18.263834', 0);
 INSERT INTO `b_category` VALUES (45, 'very good', '1747382551568.png', 42, '2025-05-16 16:02:32.271722', 0);
-INSERT INTO `b_category` VALUES (46, 'aaaaa aaaaa aaaaa', '1749280960098.jpeg', -1, '2025-06-07 15:22:41.242885', 4);
-INSERT INTO `b_category` VALUES (47, 'bbbbbbb bbbbbbb', '1749280969287.jpeg', -1, '2025-06-07 15:22:50.144798', 5);
-INSERT INTO `b_category` VALUES (48, 'cccccccccc cccccccccc', '1749280975639.jpeg', -1, '2025-06-07 15:22:58.213955', 6);
 
 -- ----------------------------
 -- Table structure for b_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `b_comment`;
 CREATE TABLE `b_comment`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `comment_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `comment_location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `comment_content` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -507,13 +503,13 @@ INSERT INTO `b_comment` VALUES (4, 'Robort Green', 'USA', 'This B2B website made
 -- ----------------------------
 DROP TABLE IF EXISTS `b_download`;
 CREATE TABLE `b_download`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `summary` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `raw` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
+  `pv` int NOT NULL,
   `link` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -532,14 +528,14 @@ INSERT INTO `b_download` VALUES (8, 'Product Specification Manual', 'This manual
 -- ----------------------------
 DROP TABLE IF EXISTS `b_error_log`;
 CREATE TABLE `b_error_log`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `log_time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of b_error_log
@@ -550,12 +546,12 @@ CREATE TABLE `b_error_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_faq`;
 CREATE TABLE `b_faq`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `question` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `reply` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
+  `pv` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -576,7 +572,7 @@ INSERT INTO `b_faq` VALUES (14, 'How do I return or exchange an item if I am not
 -- ----------------------------
 DROP TABLE IF EXISTS `b_inquiry`;
 CREATE TABLE `b_inquiry`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tel` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -584,7 +580,7 @@ CREATE TABLE `b_inquiry`  (
   `message` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
+  `pv` int NOT NULL,
   `ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -613,7 +609,7 @@ INSERT INTO `b_inquiry` VALUES (46, 'json tim', '333351534', '3333w2011@gmail.co
 -- ----------------------------
 DROP TABLE IF EXISTS `b_news`;
 CREATE TABLE `b_news`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `summary` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `source` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -624,7 +620,7 @@ CREATE TABLE `b_news`  (
   `seo_keywords` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
+  `pv` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -649,7 +645,7 @@ INSERT INTO `b_news` VALUES (16, 'Global E-Commerce Sales Reach Record High', 'S
 -- ----------------------------
 DROP TABLE IF EXISTS `b_op_log`;
 CREATE TABLE `b_op_log`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `re_ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `re_time` datetime(6) NULL DEFAULT NULL,
   `re_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -657,8 +653,8 @@ CREATE TABLE `b_op_log`  (
   `re_content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `access_time` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `re_time`(`re_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3517 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  INDEX `re_time`(`re_time` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4095 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of b_op_log
@@ -713,22 +709,600 @@ INSERT INTO `b_op_log` VALUES (3513, '127.0.0.1', '2025-06-18 09:58:24.705140', 
 INSERT INTO `b_op_log` VALUES (3514, '127.0.0.1', '2025-06-18 09:58:45.985254', '/myapp/index/common/section', 'GET', NULL, '1');
 INSERT INTO `b_op_log` VALUES (3515, '127.0.0.1', '2025-06-18 09:58:46.015756', '/myapp/index/about/section', 'GET', NULL, '49');
 INSERT INTO `b_op_log` VALUES (3516, '127.0.0.1', '2025-06-18 09:58:50.441036', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3517, '172.18.0.1', '2025-09-28 15:22:23.023723', '/', 'GET', NULL, '71');
+INSERT INTO `b_op_log` VALUES (3518, '172.18.0.1', '2025-09-28 15:56:00.992545', '/myapp/index/common/section', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3519, '172.18.0.1', '2025-09-28 16:13:59.802952', '/', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (3520, '172.18.0.1', '2025-09-28 16:34:34.566127', '/myapp/admin/basicGlobal/listInfo', 'GET', NULL, '14');
+INSERT INTO `b_op_log` VALUES (3521, '172.18.0.1', '2025-09-28 16:34:36.520839', '/myapp/admin/basicGlobal/listInfo', 'GET', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3522, '172.18.0.1', '2025-09-28 16:34:47.880315', '/myapp/admin/adminLogin', 'POST', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3523, '172.18.0.1', '2025-09-28 16:35:11.551561', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3524, '172.18.0.1', '2025-09-28 16:35:30.840350', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3525, '172.18.0.1', '2025-09-28 16:35:35.021423', '/myapp/admin/adminLogin', 'POST', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3526, '172.18.0.1', '2025-09-28 16:35:48.323314', '/myapp/admin/adminLogin', 'POST', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3527, '172.18.0.1', '2025-09-28 16:35:52.049494', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3528, '172.18.0.1', '2025-09-28 16:36:43.095549', '/myapp/admin/adminLogin', 'POST', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3529, '172.18.0.1', '2025-09-28 16:36:47.075485', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3530, '172.18.0.1', '2025-09-28 16:36:47.866259', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3531, '172.18.0.1', '2025-09-28 16:37:03.159634', '/myapp/admin/adminLogin', 'GET', NULL, '37');
+INSERT INTO `b_op_log` VALUES (3532, '172.18.0.1', '2025-09-28 16:40:41.432442', '/myapp/admin/adminLogin', 'POST', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3533, '172.18.0.1', '2025-09-28 16:40:46.631073', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3534, '172.18.0.1', '2025-09-28 16:40:51.886489', '/myapp/admin/adminLogin', 'POST', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3535, '172.18.0.1', '2025-09-28 16:41:45.171530', '/myapp/admin/adminLogin', 'POST', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3536, '172.18.0.1', '2025-09-28 16:47:14.128733', '/myapp/admin/adminLogin', 'POST', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3537, '172.18.0.1', '2025-09-28 16:47:18.172355', '/myapp/admin/adminLogin', 'POST', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3538, '172.18.0.1', '2025-09-28 16:50:03.749651', '/myapp/admin/adminLogin', 'POST', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3539, '172.18.0.1', '2025-09-28 16:50:13.573927', '/myapp/admin/basicGlobal/listInfo', 'GET', NULL, '3');
+INSERT INTO `b_op_log` VALUES (3540, '172.18.0.1', '2025-09-28 16:50:23.974082', '/myapp/admin/adminLogin', 'POST', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3541, '172.18.0.1', '2025-09-28 16:50:24.246869', '/myapp/admin/overview/count', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3542, '172.18.0.1', '2025-09-28 16:50:24.256442', '/myapp/admin/overview/dataCount', 'GET', NULL, '17');
+INSERT INTO `b_op_log` VALUES (3543, '172.18.0.1', '2025-09-28 16:50:40.841178', '/myapp/admin/thing/list', 'GET', NULL, '29');
+INSERT INTO `b_op_log` VALUES (3544, '172.18.0.1', '2025-09-28 16:50:40.921989', '/myapp/admin/category/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3545, '172.18.0.1', '2025-09-28 16:50:42.847482', '/myapp/admin/news/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3546, '172.18.0.1', '2025-09-28 16:50:43.561418', '/myapp/admin/inquiry/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3547, '172.18.0.1', '2025-09-28 16:50:44.169068', '/myapp/admin/basicSite/list', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3548, '172.18.0.1', '2025-09-28 16:50:44.575409', '/myapp/admin/user/list', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3549, '172.18.0.1', '2025-09-28 16:50:45.474554', '/myapp/admin/basicSite/list', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3550, '172.18.0.1', '2025-09-28 16:50:49.176749', '/myapp/admin/basicBanner/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3551, '172.18.0.1', '2025-09-28 16:50:54.455465', '/myapp/admin/user/list', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3552, '172.18.0.1', '2025-09-28 16:51:56.910552', '/myapp/admin/opLog/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3553, '172.18.0.1', '2025-09-28 16:52:03.534553', '/myapp/admin/user/list', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3554, '172.18.0.1', '2025-09-28 16:52:04.049907', '/myapp/admin/basicSite/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3555, '172.18.0.1', '2025-09-28 16:52:06.235782', '/myapp/admin/inquiry/list', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3556, '172.18.0.1', '2025-09-28 16:52:08.514415', '/myapp/admin/news/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3557, '172.18.0.1', '2025-09-28 16:52:11.320962', '/myapp/admin/thing/list', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3558, '172.18.0.1', '2025-09-28 16:52:11.403523', '/myapp/admin/category/list', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3559, '172.18.0.1', '2025-09-28 16:52:12.459284', '/myapp/admin/overview/dataCount', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3560, '172.18.0.1', '2025-09-28 16:52:12.465123', '/myapp/admin/overview/count', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3561, '172.18.0.5', '2025-09-28 16:59:28.199487', '/myapp/index/common/section', 'GET', NULL, '17');
+INSERT INTO `b_op_log` VALUES (3562, '172.18.0.1', '2025-09-28 16:59:28.227991', '/myapp/index/home/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (3563, '172.18.0.1', '2025-09-28 16:59:38.946619', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3564, '172.18.0.5', '2025-09-28 16:59:38.967150', '/myapp/index/common/section', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3565, '172.18.0.5', '2025-09-28 17:01:57.374056', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3566, '172.18.0.1', '2025-09-28 17:01:57.392369', '/myapp/index/home/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3567, '172.18.0.1', '2025-09-28 17:11:51.403442', '/myapp/admin/overview/count', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3568, '172.18.0.1', '2025-09-28 17:11:51.406109', '/myapp/admin/overview/dataCount', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3569, '172.18.0.1', '2025-09-28 17:11:53.255160', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3570, '172.18.0.5', '2025-09-28 17:11:53.257193', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3571, '172.18.0.1', '2025-09-28 17:33:56.112732', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3572, '172.18.0.5', '2025-09-28 17:33:56.112721', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3573, '172.18.0.1', '2025-09-28 17:47:59.766742', '/myapp/admin/thing/list', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3574, '172.18.0.1', '2025-09-28 17:47:59.856679', '/myapp/admin/category/list', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3575, '172.18.0.5', '2025-09-28 17:48:08.001997', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3576, '172.18.0.1', '2025-09-28 17:48:08.016345', '/myapp/index/thing/detail', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3577, '172.18.0.1', '2025-09-28 17:48:13.212692', '/myapp/index/contact/section', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3578, '172.18.0.1', '2025-09-28 17:48:30.183043', '/myapp/admin/news/list', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3579, '172.18.0.1', '2025-09-28 17:48:33.798712', '/myapp/admin/inquiry/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3580, '172.18.0.1', '2025-09-28 17:48:40.731100', '/myapp/admin/inquiry/list', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3581, '172.18.0.1', '2025-09-28 17:48:42.971798', '/myapp/admin/inquiry/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3582, '172.18.0.1', '2025-09-28 17:48:59.607530', '/myapp/admin/opLog/list', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3583, '172.18.0.1', '2025-09-28 17:50:18.597016', '/myapp/admin/user/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3584, '172.18.0.1', '2025-09-28 17:50:33.293437', '/myapp/admin/basicSite/list', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3585, '172.18.0.1', '2025-09-28 17:50:42.710522', '/myapp/admin/overview/count', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3586, '172.18.0.1', '2025-09-28 17:50:42.716212', '/myapp/admin/overview/dataCount', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3587, '172.18.0.1', '2025-09-28 17:50:46.107730', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3588, '172.18.0.5', '2025-09-28 17:50:46.111234', '/myapp/index/common/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3589, '172.18.0.1', '2025-09-28 17:50:52.964774', '/myapp/admin/overview/count', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3590, '172.18.0.1', '2025-09-28 17:50:53.522017', '/myapp/admin/overview/count', 'GET', NULL, '3');
+INSERT INTO `b_op_log` VALUES (3591, '172.18.0.1', '2025-09-28 17:50:54.322667', '/myapp/admin/overview/count', 'GET', NULL, '3');
+INSERT INTO `b_op_log` VALUES (3592, '172.18.0.1', '2025-09-28 17:50:57.512434', '/myapp/admin/thing/list', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3593, '172.18.0.1', '2025-09-28 17:50:57.599489', '/myapp/admin/category/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3594, '172.18.0.1', '2025-09-28 17:51:02.697753', '/myapp/admin/news/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3595, '172.18.0.1', '2025-09-28 17:51:05.943625', '/myapp/admin/inquiry/list', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3596, '172.18.0.1', '2025-09-28 17:51:16.149076', '/myapp/admin/basicSite/list', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3597, '172.18.0.1', '2025-09-28 17:51:18.820679', '/myapp/admin/basicBanner/list', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3598, '172.18.0.1', '2025-09-28 17:51:32.110145', '/myapp/admin/overview/count', 'GET', NULL, '6');
+INSERT INTO `b_op_log` VALUES (3599, '172.18.0.1', '2025-09-28 17:51:32.126100', '/myapp/admin/overview/dataCount', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3600, '172.18.0.1', '2025-09-28 17:55:48.468823', '/myapp/admin/opLog/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3601, '172.18.0.1', '2025-09-28 17:55:49.265110', '/myapp/admin/user/list', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3602, '172.18.0.1', '2025-09-28 17:57:16.592307', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3603, '172.18.0.5', '2025-09-28 17:57:16.592288', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3604, '172.18.0.5', '2025-09-28 18:08:51.187154', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3605, '172.18.0.5', '2025-09-28 18:08:51.216619', '/myapp/index/home/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (3606, '172.18.0.1', '2025-09-28 18:09:40.203610', '/myapp/index/about/section', 'GET', NULL, '16');
+INSERT INTO `b_op_log` VALUES (3607, '172.18.0.1', '2025-09-28 18:09:43.257759', '/myapp/index/home/section', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3608, '172.18.0.1', '2025-09-28 18:10:55.627847', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3609, '172.18.0.5', '2025-09-28 18:10:55.743973', '/myapp/index/common/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3610, '172.18.0.1', '2025-09-28 18:10:55.772431', '/myapp/index/thing/section', 'GET', NULL, '61');
+INSERT INTO `b_op_log` VALUES (3611, '172.18.0.1', '2025-09-28 18:10:55.777125', '/myapp/index/thing/section', 'GET', NULL, '59');
+INSERT INTO `b_op_log` VALUES (3612, '172.18.0.1', '2025-09-28 18:11:15.301764', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3613, '172.18.0.1', '2025-09-28 18:11:48.572266', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (3614, '172.18.0.1', '2025-09-28 18:11:48.580582', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (3615, '172.18.0.5', '2025-09-28 18:11:49.952521', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3616, '172.18.0.1', '2025-09-28 18:11:49.984506', '/myapp/index/thing/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3617, '172.18.0.1', '2025-09-28 18:11:50.033828', '/myapp/index/thing/section', 'GET', NULL, '80');
+INSERT INTO `b_op_log` VALUES (3618, '172.18.0.1', '2025-09-28 18:11:50.074669', '/myapp/index/thing/section', 'GET', NULL, '25');
+INSERT INTO `b_op_log` VALUES (3619, '172.18.0.1', '2025-09-28 18:11:52.088684', '/myapp/index/thing/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (3620, '172.18.0.1', '2025-09-28 18:11:52.095983', '/myapp/index/thing/section', 'GET', NULL, '29');
+INSERT INTO `b_op_log` VALUES (3621, '172.18.0.5', '2025-09-28 18:11:52.801107', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3622, '172.18.0.1', '2025-09-28 18:11:52.831063', '/myapp/index/thing/section', 'GET', NULL, '28');
+INSERT INTO `b_op_log` VALUES (3623, '172.18.0.1', '2025-09-28 18:11:52.866277', '/myapp/index/thing/section', 'GET', NULL, '66');
+INSERT INTO `b_op_log` VALUES (3624, '172.18.0.1', '2025-09-28 18:11:52.905536', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3625, '172.18.0.1', '2025-09-28 18:12:03.525741', '/myapp/index/about/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3626, '172.18.0.1', '2025-09-28 18:12:23.070475', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3627, '172.18.0.1', '2025-09-28 18:13:19.851385', '/myapp/admin/thing/list', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3628, '172.18.0.1', '2025-09-28 18:13:19.938146', '/myapp/admin/category/list', 'GET', NULL, '13');
+INSERT INTO `b_op_log` VALUES (3629, '172.18.0.1', '2025-09-28 18:13:31.260194', '/myapp/admin/category/list', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3630, '172.18.0.1', '2025-09-28 18:13:47.918195', '/myapp/admin/overview/count', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3631, '172.18.0.1', '2025-09-28 18:13:47.920725', '/myapp/admin/overview/dataCount', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3632, '172.18.0.1', '2025-09-28 18:13:50.316068', '/myapp/admin/thing/list', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3633, '172.18.0.1', '2025-09-28 18:13:50.408449', '/myapp/admin/category/list', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3634, '172.18.0.1', '2025-09-28 18:13:59.478686', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3635, '172.18.0.5', '2025-09-28 18:13:59.479409', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3636, '172.18.0.1', '2025-09-28 18:14:32.098687', '/myapp/index/thing/detail', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3637, '172.18.0.5', '2025-09-28 18:14:32.158455', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3638, '172.18.0.5', '2025-09-28 18:14:32.167983', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3639, '172.18.0.1', '2025-09-28 18:14:32.208512', '/myapp/index/thing/section', 'GET', NULL, '52');
+INSERT INTO `b_op_log` VALUES (3640, '172.18.0.1', '2025-09-28 18:14:32.210960', '/myapp/index/thing/section', 'GET', NULL, '55');
+INSERT INTO `b_op_log` VALUES (3641, '172.18.0.1', '2025-09-28 18:14:32.219193', '/myapp/index/thing/section', 'GET', NULL, '52');
+INSERT INTO `b_op_log` VALUES (3642, '172.18.0.1', '2025-09-28 18:14:32.220660', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3643, '172.18.0.5', '2025-09-28 18:15:16.754007', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3644, '172.18.0.1', '2025-09-28 18:15:16.756301', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3645, '172.18.0.5', '2025-09-28 18:15:32.720286', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3646, '172.18.0.1', '2025-09-28 18:15:32.720313', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3647, '172.18.0.1', '2025-09-28 18:16:17.384982', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3648, '172.18.0.1', '2025-09-28 18:16:23.227288', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (3649, '172.18.0.1', '2025-09-28 18:16:23.228578', '/myapp/index/thing/section', 'GET', NULL, '25');
+INSERT INTO `b_op_log` VALUES (3650, '172.18.0.1', '2025-09-28 18:16:29.628860', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3651, '172.18.0.1', '2025-09-28 18:16:29.638426', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3652, '172.18.0.1', '2025-09-28 18:16:33.130964', '/myapp/index/thing/section', 'GET', NULL, '51');
+INSERT INTO `b_op_log` VALUES (3653, '172.18.0.1', '2025-09-28 18:16:33.132739', '/myapp/index/thing/section', 'GET', NULL, '53');
+INSERT INTO `b_op_log` VALUES (3654, '172.18.0.1', '2025-09-28 18:16:34.459788', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (3655, '172.18.0.1', '2025-09-28 18:16:34.460739', '/myapp/index/thing/section', 'GET', NULL, '48');
+INSERT INTO `b_op_log` VALUES (3656, '172.18.0.1', '2025-09-28 18:16:42.743066', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3657, '172.18.0.5', '2025-09-28 18:16:42.781783', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3658, '172.18.0.1', '2025-09-28 18:16:42.824049', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (3659, '172.18.0.1', '2025-09-28 18:16:42.836348', '/myapp/index/common/section', 'GET', NULL, '16');
+INSERT INTO `b_op_log` VALUES (3660, '172.18.0.1', '2025-09-28 18:16:42.859734', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (3661, '172.18.0.1', '2025-09-28 18:16:42.874199', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3662, '172.18.0.1', '2025-09-28 18:16:42.884238', '/myapp/index/thing/section', 'GET', NULL, '64');
+INSERT INTO `b_op_log` VALUES (3663, '172.18.0.1', '2025-09-28 18:16:42.920422', '/myapp/index/thing/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3664, '172.18.0.5', '2025-09-28 18:16:51.369795', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3665, '172.18.0.1', '2025-09-28 18:16:51.370049', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3666, '172.18.0.5', '2025-09-28 18:21:18.071349', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3667, '172.18.0.5', '2025-09-28 18:21:18.090515', '/myapp/index/home/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (3668, '172.18.0.5', '2025-09-28 19:11:10.012835', '/myapp/index/common/section', 'GET', NULL, '17');
+INSERT INTO `b_op_log` VALUES (3669, '172.18.0.1', '2025-09-28 19:11:10.026547', '/myapp/index/home/section', 'GET', NULL, '31');
+INSERT INTO `b_op_log` VALUES (3670, '172.18.0.1', '2025-09-28 19:12:47.539747', '/myapp/index/thing/detail', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3671, '172.18.0.5', '2025-09-28 19:12:47.639049', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3672, '172.18.0.5', '2025-09-28 19:12:47.671979', '/myapp/index/common/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3673, '172.18.0.1', '2025-09-28 19:12:47.679478', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (3674, '172.18.0.1', '2025-09-28 19:12:47.694691', '/myapp/index/thing/section', 'GET', NULL, '60');
+INSERT INTO `b_op_log` VALUES (3675, '172.18.0.5', '2025-09-28 19:12:47.695938', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3676, '172.18.0.1', '2025-09-28 19:12:47.697445', '/myapp/index/thing/section', 'GET', NULL, '63');
+INSERT INTO `b_op_log` VALUES (3677, '172.18.0.5', '2025-09-28 19:13:26.663514', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3678, '172.18.0.5', '2025-09-28 19:13:26.683885', '/myapp/index/home/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3679, '172.18.0.5', '2025-09-28 19:22:14.467132', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3680, '172.18.0.1', '2025-09-28 19:22:14.467531', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3681, '172.18.0.1', '2025-09-28 19:22:23.230503', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3682, '172.18.0.1', '2025-09-28 19:23:06.235752', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3683, '172.18.0.1', '2025-09-28 19:23:09.079177', '/myapp/index/contact/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3684, '172.18.0.1', '2025-09-28 19:23:44.516483', '/myapp/index/contact/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3685, '172.18.0.1', '2025-09-28 19:32:46.283028', '/myapp/index/thing/detail', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3686, '172.18.0.1', '2025-09-28 19:33:10.917362', '/myapp/admin/category/list', 'GET', NULL, '14');
+INSERT INTO `b_op_log` VALUES (3687, '172.18.0.1', '2025-09-28 19:33:54.568667', '/myapp/admin/thing/list', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3688, '172.18.0.1', '2025-09-28 19:33:54.645867', '/myapp/admin/category/list', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3689, '172.18.0.1', '2025-09-28 19:34:03.306854', '/myapp/admin/category/list', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3690, '172.18.0.1', '2025-09-28 19:34:21.067804', '/myapp/admin/category/list', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3691, '172.18.0.1', '2025-09-28 19:34:27.209248', '/myapp/admin/overview/count', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3692, '172.18.0.1', '2025-09-28 19:34:27.215006', '/myapp/admin/overview/dataCount', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3693, '172.18.0.1', '2025-09-28 19:34:54.057441', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3694, '172.18.0.1', '2025-09-28 19:59:35.294929', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3695, '172.18.0.5', '2025-09-28 19:59:35.295562', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3696, '172.18.0.1', '2025-09-28 20:01:53.439747', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3697, '172.18.0.5', '2025-09-28 20:01:53.449536', '/myapp/index/common/section', 'GET', NULL, '14');
+INSERT INTO `b_op_log` VALUES (3698, '172.18.0.5', '2025-09-28 20:02:24.575105', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3699, '172.18.0.1', '2025-09-28 20:02:24.577518', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3700, '172.18.0.5', '2025-09-28 20:02:25.396839', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3701, '172.18.0.1', '2025-09-28 20:02:25.397745', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3702, '172.18.0.5', '2025-09-28 20:02:26.037611', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3703, '172.18.0.1', '2025-09-28 20:02:26.037848', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3704, '172.18.0.1', '2025-09-28 20:02:27.023144', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3705, '172.18.0.5', '2025-09-28 20:02:27.024712', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3706, '172.18.0.1', '2025-09-28 20:02:33.005840', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3707, '172.18.0.5', '2025-09-28 20:02:33.008760', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3708, '172.18.0.1', '2025-09-28 20:02:35.271116', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3709, '172.18.0.5', '2025-09-28 20:02:35.272990', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3710, '172.18.0.1', '2025-09-28 20:02:38.371411', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3711, '172.18.0.5', '2025-09-28 20:02:38.373226', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3712, '172.18.0.1', '2025-09-28 20:02:42.451738', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3713, '172.18.0.5', '2025-09-28 20:02:42.451922', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3714, '172.18.0.5', '2025-09-28 20:04:01.422338', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3715, '172.18.0.1', '2025-09-28 20:04:01.422338', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3716, '172.18.0.1', '2025-09-28 20:04:04.600547', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3717, '172.18.0.5', '2025-09-28 20:04:04.600666', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3718, '172.18.0.5', '2025-09-28 20:04:05.191856', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3719, '172.18.0.1', '2025-09-28 20:04:05.212647', '/myapp/index/home/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3720, '172.18.0.1', '2025-09-28 20:04:05.737233', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3721, '172.18.0.5', '2025-09-28 20:04:05.737210', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3722, '172.18.0.1', '2025-09-28 20:04:06.192136', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3723, '172.18.0.5', '2025-09-28 20:04:06.192086', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3724, '172.18.0.5', '2025-09-28 20:04:06.539984', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3725, '172.18.0.1', '2025-09-28 20:04:06.540159', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3726, '172.18.0.1', '2025-09-28 20:04:10.362502', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3727, '172.18.0.5', '2025-09-28 20:04:10.365561', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3728, '172.18.0.5', '2025-09-28 20:04:14.720178', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3729, '172.18.0.1', '2025-09-28 20:04:14.720259', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3730, '172.18.0.1', '2025-09-28 20:04:29.602215', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3731, '172.18.0.5', '2025-09-28 20:04:29.603004', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3732, '172.18.0.1', '2025-09-28 20:04:34.201605', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3733, '172.18.0.5', '2025-09-28 20:04:34.201657', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3734, '172.18.0.1', '2025-09-28 20:04:44.240620', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3735, '172.18.0.5', '2025-09-28 20:04:44.240547', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3736, '172.18.0.5', '2025-09-28 20:08:56.183829', '/myapp/index/common/section', 'GET', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3737, '172.18.0.1', '2025-09-28 20:08:56.183809', '/myapp/index/home/section', 'GET', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3738, '172.18.0.1', '2025-09-28 20:08:57.614427', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3739, '172.18.0.5', '2025-09-28 20:08:57.614478', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3740, '172.18.0.1', '2025-09-28 20:08:58.787693', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3741, '172.18.0.5', '2025-09-28 20:08:58.788422', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3742, '172.18.0.5', '2025-09-28 20:08:59.340429', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3743, '172.18.0.1', '2025-09-28 20:08:59.340396', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3744, '172.18.0.1', '2025-09-28 20:08:59.510500', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3745, '172.18.0.5', '2025-09-28 20:08:59.510525', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3746, '172.18.0.5', '2025-09-28 20:08:59.687078', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3747, '172.18.0.1', '2025-09-28 20:08:59.687267', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3748, '172.18.0.1', '2025-09-28 20:08:59.850196', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3749, '172.18.0.5', '2025-09-28 20:08:59.850601', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3750, '172.18.0.1', '2025-09-28 20:09:00.288712', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3751, '172.18.0.5', '2025-09-28 20:09:00.289033', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3752, '172.18.0.5', '2025-09-28 20:09:00.556313', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3753, '172.18.0.1', '2025-09-28 20:09:00.556248', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3754, '172.18.0.1', '2025-09-28 20:09:01.004731', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3755, '172.18.0.5', '2025-09-28 20:09:01.004942', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3756, '172.18.0.1', '2025-09-28 20:09:01.721654', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3757, '172.18.0.5', '2025-09-28 20:09:01.721960', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3758, '172.18.0.5', '2025-09-28 20:10:18.706332', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3759, '172.18.0.1', '2025-09-28 20:10:18.706293', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3760, '172.18.0.5', '2025-09-28 20:10:21.141759', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3761, '172.18.0.1', '2025-09-28 20:10:21.141804', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3762, '172.18.0.5', '2025-09-28 20:10:21.582653', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3763, '172.18.0.1', '2025-09-28 20:10:21.582784', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3764, '172.18.0.1', '2025-09-28 20:10:22.212829', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3765, '172.18.0.5', '2025-09-28 20:10:22.212978', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3766, '172.18.0.1', '2025-09-28 20:10:23.026198', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3767, '172.18.0.5', '2025-09-28 20:10:23.026426', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3768, '172.18.0.1', '2025-09-28 20:10:23.538436', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3769, '172.18.0.5', '2025-09-28 20:10:23.538581', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3770, '172.18.0.1', '2025-09-28 20:10:24.146781', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3771, '172.18.0.5', '2025-09-28 20:10:24.146842', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3772, '172.18.0.5', '2025-09-28 20:10:24.532588', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3773, '172.18.0.1', '2025-09-28 20:10:24.533403', '/myapp/index/home/section', 'GET', NULL, '2');
+INSERT INTO `b_op_log` VALUES (3774, '172.18.0.1', '2025-09-28 20:10:24.712511', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3775, '172.18.0.5', '2025-09-28 20:10:24.712685', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3776, '172.18.0.1', '2025-09-28 20:10:24.878060', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3777, '172.18.0.5', '2025-09-28 20:10:24.878743', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3778, '172.18.0.5', '2025-09-28 20:10:25.028020', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3779, '172.18.0.1', '2025-09-28 20:10:25.028462', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3780, '172.18.0.5', '2025-09-28 20:10:27.119097', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3781, '172.18.0.1', '2025-09-28 20:10:27.118976', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3782, '172.18.0.5', '2025-09-28 20:11:03.674705', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3783, '172.18.0.1', '2025-09-28 20:11:03.676581', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3784, '172.18.0.5', '2025-09-28 20:11:04.922317', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3785, '172.18.0.1', '2025-09-28 20:11:04.924563', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3786, '172.18.0.1', '2025-09-28 20:11:05.165644', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3787, '172.18.0.5', '2025-09-28 20:11:05.165776', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3788, '172.18.0.1', '2025-09-28 20:11:05.564355', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3789, '172.18.0.5', '2025-09-28 20:11:05.564580', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3790, '172.18.0.1', '2025-09-28 20:11:05.917925', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3791, '172.18.0.5', '2025-09-28 20:11:05.918099', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3792, '172.18.0.1', '2025-09-28 20:11:06.095169', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3793, '172.18.0.5', '2025-09-28 20:11:06.095309', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3794, '172.18.0.1', '2025-09-28 20:11:06.250811', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3795, '172.18.0.5', '2025-09-28 20:11:06.250856', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3796, '172.18.0.1', '2025-09-28 20:11:07.668840', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3797, '172.18.0.5', '2025-09-28 20:11:07.669073', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3798, '172.18.0.1', '2025-09-28 20:11:07.834262', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3799, '172.18.0.5', '2025-09-28 20:11:07.834319', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3800, '172.18.0.5', '2025-09-28 20:11:08.110402', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3801, '172.18.0.1', '2025-09-28 20:11:08.110290', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3802, '172.18.0.5', '2025-09-28 20:11:08.616504', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3803, '172.18.0.1', '2025-09-28 20:11:08.616478', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3804, '172.18.0.1', '2025-09-28 20:11:09.295169', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3805, '172.18.0.5', '2025-09-28 20:11:09.295172', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3806, '172.18.0.5', '2025-09-28 20:11:09.884693', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3807, '172.18.0.1', '2025-09-28 20:11:09.885146', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3808, '172.18.0.5', '2025-09-28 20:11:12.662367', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3809, '172.18.0.1', '2025-09-28 20:11:12.662376', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3810, '172.18.0.1', '2025-09-28 20:11:22.744811', '/myapp/admin/basicGlobal/listInfo', 'GET', NULL, '3');
+INSERT INTO `b_op_log` VALUES (3811, '172.18.0.1', '2025-09-28 20:11:24.169068', '/myapp/admin/adminLogin', 'POST', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3812, '172.18.0.1', '2025-09-28 20:11:24.311184', '/myapp/admin/overview/count', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3813, '172.18.0.1', '2025-09-28 20:11:24.319052', '/myapp/admin/overview/dataCount', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3814, '172.18.0.1', '2025-09-28 20:11:29.639191', '/myapp/admin/thing/list', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3815, '172.18.0.1', '2025-09-28 20:11:29.724355', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3816, '172.18.0.1', '2025-09-28 20:11:34.608570', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3817, '172.18.0.5', '2025-09-28 20:12:19.815262', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3818, '172.18.0.1', '2025-09-28 20:12:19.833414', '/myapp/index/home/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3819, '172.18.0.5', '2025-09-28 20:12:21.291143', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3820, '172.18.0.1', '2025-09-28 20:12:21.291145', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3821, '172.18.0.1', '2025-09-28 20:12:21.923806', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3822, '172.18.0.5', '2025-09-28 20:12:21.924092', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3823, '172.18.0.1', '2025-09-28 20:18:44.169820', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3824, '172.18.0.5', '2025-09-28 20:18:44.175404', '/myapp/index/common/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3825, '172.18.0.5', '2025-09-28 20:19:04.459520', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3826, '172.18.0.1', '2025-09-28 20:19:04.477653', '/myapp/index/home/section', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3827, '172.18.0.1', '2025-09-28 20:19:09.977934', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3828, '172.18.0.5', '2025-09-28 20:19:09.978042', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3829, '172.18.0.1', '2025-09-28 20:19:10.368152', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3830, '172.18.0.5', '2025-09-28 20:19:10.370755', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3831, '172.18.0.1', '2025-09-28 20:19:42.807078', '/myapp/index/thing/section', 'GET', NULL, '55');
+INSERT INTO `b_op_log` VALUES (3832, '172.18.0.1', '2025-09-28 20:19:42.811563', '/myapp/index/thing/section', 'GET', NULL, '59');
+INSERT INTO `b_op_log` VALUES (3833, '172.18.0.1', '2025-09-28 20:19:51.723879', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3834, '172.18.0.1', '2025-09-28 20:19:51.730872', '/myapp/index/thing/section', 'GET', NULL, '61');
+INSERT INTO `b_op_log` VALUES (3835, '172.18.0.1', '2025-09-28 20:19:55.148791', '/myapp/index/thing/section', 'GET', NULL, '50');
+INSERT INTO `b_op_log` VALUES (3836, '172.18.0.1', '2025-09-28 20:19:55.151461', '/myapp/index/thing/section', 'GET', NULL, '52');
+INSERT INTO `b_op_log` VALUES (3837, '172.18.0.1', '2025-09-28 20:19:56.731643', '/myapp/index/thing/section', 'GET', NULL, '46');
+INSERT INTO `b_op_log` VALUES (3838, '172.18.0.1', '2025-09-28 20:19:56.735585', '/myapp/index/thing/section', 'GET', NULL, '50');
+INSERT INTO `b_op_log` VALUES (3839, '172.18.0.1', '2025-09-28 20:19:58.750151', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (3840, '172.18.0.1', '2025-09-28 20:19:58.759470', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3841, '172.18.0.1', '2025-09-28 20:20:00.609789', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3842, '172.18.0.1', '2025-09-28 20:20:00.614486', '/myapp/index/thing/section', 'GET', NULL, '50');
+INSERT INTO `b_op_log` VALUES (3843, '172.18.0.1', '2025-09-28 20:20:02.054166', '/myapp/index/thing/section', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (3844, '172.18.0.1', '2025-09-28 20:20:02.060047', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (3845, '172.18.0.5', '2025-09-28 20:26:19.324291', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3846, '172.18.0.1', '2025-09-28 20:26:19.343646', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3847, '172.18.0.1', '2025-09-28 20:26:19.348666', '/myapp/index/thing/section', 'GET', NULL, '27');
+INSERT INTO `b_op_log` VALUES (3848, '172.18.0.1', '2025-09-28 20:26:27.827985', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3849, '172.18.0.1', '2025-09-28 20:26:27.841214', '/myapp/index/thing/section', 'GET', NULL, '35');
+INSERT INTO `b_op_log` VALUES (3850, '172.18.0.1', '2025-09-28 20:26:31.296572', '/myapp/index/thing/section', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3851, '172.18.0.1', '2025-09-28 20:26:31.306166', '/myapp/index/thing/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3852, '172.18.0.1', '2025-09-28 20:26:38.236908', '/myapp/admin/category/delete', 'POST', NULL, '13');
+INSERT INTO `b_op_log` VALUES (3853, '172.18.0.1', '2025-09-28 20:26:38.268437', '/myapp/admin/category/list', 'GET', NULL, '13');
+INSERT INTO `b_op_log` VALUES (3854, '172.18.0.1', '2025-09-28 20:26:40.243224', '/myapp/admin/category/delete', 'POST', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3855, '172.18.0.1', '2025-09-28 20:26:40.261272', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3856, '172.18.0.5', '2025-09-28 20:26:42.228162', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3857, '172.18.0.1', '2025-09-28 20:26:42.259202', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (3858, '172.18.0.1', '2025-09-28 20:26:42.268921', '/myapp/index/thing/section', 'GET', NULL, '42');
+INSERT INTO `b_op_log` VALUES (3859, '172.18.0.1', '2025-09-28 20:26:44.299151', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3860, '172.18.0.5', '2025-09-28 20:26:55.322870', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3861, '172.18.0.1', '2025-09-28 20:26:55.341357', '/myapp/index/home/section', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3862, '172.18.0.1', '2025-09-28 20:27:11.218954', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3863, '172.18.0.1', '2025-09-28 20:27:11.229720', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (3864, '172.18.0.1', '2025-09-28 20:27:17.191201', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (3865, '172.18.0.1', '2025-09-28 20:27:17.196142', '/myapp/index/thing/section', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (3866, '172.18.0.1', '2025-09-28 20:27:22.006964', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3867, '172.18.0.1', '2025-09-28 20:27:22.010858', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3868, '172.18.0.1', '2025-09-28 20:27:23.380296', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (3869, '172.18.0.1', '2025-09-28 20:27:23.383391', '/myapp/index/thing/section', 'GET', NULL, '34');
+INSERT INTO `b_op_log` VALUES (3870, '172.18.0.1', '2025-09-28 20:27:28.173021', '/myapp/index/thing/section', 'GET', NULL, '27');
+INSERT INTO `b_op_log` VALUES (3871, '172.18.0.1', '2025-09-28 20:27:28.206808', '/myapp/index/thing/section', 'GET', NULL, '61');
+INSERT INTO `b_op_log` VALUES (3872, '172.18.0.5', '2025-09-28 20:27:49.847025', '/myapp/index/common/section', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3873, '172.18.0.1', '2025-09-28 20:27:49.884815', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (3874, '172.18.0.1', '2025-09-28 20:27:49.892454', '/myapp/index/thing/section', 'GET', NULL, '40');
+INSERT INTO `b_op_log` VALUES (3875, '172.18.0.1', '2025-09-28 20:27:51.849675', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3876, '172.18.0.1', '2025-09-28 20:31:17.280942', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3877, '172.18.0.5', '2025-09-28 20:31:17.281269', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3878, '172.18.0.1', '2025-09-28 20:32:19.795393', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3879, '172.18.0.1', '2025-09-28 20:32:24.369099', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3880, '172.18.0.1', '2025-09-28 20:32:24.370201', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3881, '172.18.0.1', '2025-09-28 20:32:27.823585', '/myapp/index/contact/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3882, '172.18.0.1', '2025-09-28 20:32:35.539462', '/myapp/index/thing/section', 'GET', NULL, '35');
+INSERT INTO `b_op_log` VALUES (3883, '172.18.0.1', '2025-09-28 20:32:35.545428', '/myapp/index/thing/section', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (3884, '172.18.0.1', '2025-09-28 20:32:39.324672', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (3885, '172.18.0.1', '2025-09-28 20:32:39.333217', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3886, '172.18.0.1', '2025-09-28 20:32:42.557065', '/myapp/index/thing/section', 'GET', NULL, '35');
+INSERT INTO `b_op_log` VALUES (3887, '172.18.0.1', '2025-09-28 20:32:42.565187', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3888, '172.18.0.1', '2025-09-28 20:32:44.009909', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3889, '172.18.0.1', '2025-09-28 20:32:44.013243', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (3890, '172.18.0.5', '2025-09-28 20:33:12.586854', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3891, '172.18.0.1', '2025-09-28 20:33:12.637031', '/myapp/index/thing/section', 'GET', NULL, '52');
+INSERT INTO `b_op_log` VALUES (3892, '172.18.0.1', '2025-09-28 20:33:12.639512', '/myapp/index/thing/section', 'GET', NULL, '54');
+INSERT INTO `b_op_log` VALUES (3893, '172.18.0.5', '2025-09-28 20:33:16.521522', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3894, '172.18.0.1', '2025-09-28 20:33:16.539965', '/myapp/index/thing/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (3895, '172.18.0.1', '2025-09-28 20:33:16.545831', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3896, '172.18.0.5', '2025-09-28 20:33:22.355454', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3897, '172.18.0.1', '2025-09-28 20:33:22.396360', '/myapp/index/thing/section', 'GET', NULL, '40');
+INSERT INTO `b_op_log` VALUES (3898, '172.18.0.1', '2025-09-28 20:33:22.401160', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3899, '172.18.0.5', '2025-09-28 20:33:22.772537', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3900, '172.18.0.5', '2025-09-28 20:33:22.796919', '/myapp/index/thing/section', 'GET', NULL, '25');
+INSERT INTO `b_op_log` VALUES (3901, '172.18.0.1', '2025-09-28 20:33:22.797140', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3902, '172.18.0.1', '2025-09-28 20:33:23.623347', '/myapp/index/thing/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (3903, '172.18.0.1', '2025-09-28 20:33:23.631337', '/myapp/index/thing/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3904, '172.18.0.1', '2025-09-28 20:33:26.994501', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3905, '172.18.0.1', '2025-09-28 20:33:39.915019', '/myapp/index/about/section', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3906, '172.18.0.1', '2025-09-28 20:34:06.507473', '/myapp/index/contact/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3907, '172.18.0.1', '2025-09-28 20:34:14.461591', '/myapp/index/thing/section', 'GET', NULL, '33');
+INSERT INTO `b_op_log` VALUES (3908, '172.18.0.1', '2025-09-28 20:34:14.470400', '/myapp/index/thing/section', 'GET', NULL, '42');
+INSERT INTO `b_op_log` VALUES (3909, '172.18.0.1', '2025-09-28 20:34:21.531736', '/myapp/admin/category/delete', 'POST', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3910, '172.18.0.1', '2025-09-28 20:34:21.548034', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3911, '172.18.0.5', '2025-09-28 20:34:51.505227', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3912, '172.18.0.1', '2025-09-28 20:34:51.512350', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3913, '172.18.0.1', '2025-09-28 20:35:42.256072', '/myapp/index/contact/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3914, '172.18.0.1', '2025-09-28 20:35:59.334051', '/myapp/index/thing/detail', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3915, '172.18.0.1', '2025-09-28 20:36:37.494428', '/myapp/index/about/section', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3916, '172.18.0.1', '2025-09-28 20:36:38.697063', '/myapp/index/home/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3917, '172.18.0.1', '2025-09-28 20:36:41.311775', '/myapp/index/thing/section', 'GET', NULL, '53');
+INSERT INTO `b_op_log` VALUES (3918, '172.18.0.1', '2025-09-28 20:36:41.314040', '/myapp/index/thing/section', 'GET', NULL, '56');
+INSERT INTO `b_op_log` VALUES (3919, '172.18.0.1', '2025-09-28 20:42:21.980435', '/myapp/admin/news/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3920, '172.18.0.5', '2025-09-28 20:44:01.837330', '/myapp/index/common/section', 'GET', NULL, '13');
+INSERT INTO `b_op_log` VALUES (3921, '172.18.0.1', '2025-09-28 20:44:01.840868', '/myapp/index/thing/section', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3922, '172.18.0.5', '2025-09-28 20:44:01.857122', '/myapp/index/thing/section', 'GET', NULL, '33');
+INSERT INTO `b_op_log` VALUES (3923, '172.18.0.1', '2025-09-28 20:44:05.880891', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3924, '172.18.0.1', '2025-09-28 20:44:38.560650', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3925, '172.18.0.1', '2025-09-28 20:44:48.348419', '/myapp/index/thing/section', 'GET', NULL, '37');
+INSERT INTO `b_op_log` VALUES (3926, '172.18.0.1', '2025-09-28 20:44:48.356284', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3927, '172.18.0.1', '2025-09-28 20:44:55.138575', '/myapp/index/thing/section', 'GET', NULL, '31');
+INSERT INTO `b_op_log` VALUES (3928, '172.18.0.1', '2025-09-28 20:44:55.146682', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (3929, '172.18.0.1', '2025-09-28 20:44:59.372439', '/myapp/index/thing/section', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3930, '172.18.0.1', '2025-09-28 20:44:59.378384', '/myapp/index/thing/section', 'GET', NULL, '25');
+INSERT INTO `b_op_log` VALUES (3931, '172.18.0.1', '2025-09-28 20:45:11.171652', '/myapp/admin/thing/list', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3932, '172.18.0.1', '2025-09-28 20:45:11.262639', '/myapp/admin/category/list', 'GET', NULL, '17');
+INSERT INTO `b_op_log` VALUES (3933, '172.18.0.1', '2025-09-28 20:45:12.470342', '/myapp/admin/category/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3934, '172.18.0.1', '2025-09-28 20:45:19.828854', '/myapp/admin/category/delete', 'POST', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3935, '172.18.0.1', '2025-09-28 20:45:19.847675', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3936, '172.18.0.5', '2025-09-28 20:45:23.415534', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3937, '172.18.0.1', '2025-09-28 20:45:23.432752', '/myapp/index/thing/section', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (3938, '172.18.0.1', '2025-09-28 20:45:23.436825', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (3939, '172.18.0.1', '2025-09-28 20:45:28.053339', '/myapp/index/common/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3940, '172.18.0.1', '2025-09-28 20:45:28.059009', '/myapp/index/thing/section', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3941, '172.18.0.1', '2025-09-28 20:45:28.072909', '/myapp/index/thing/section', 'GET', NULL, '30');
+INSERT INTO `b_op_log` VALUES (3942, '172.18.0.1', '2025-09-28 20:45:55.801200', '/myapp/index/thing/detail', 'GET', NULL, '7');
+INSERT INTO `b_op_log` VALUES (3943, '172.18.0.1', '2025-09-28 20:45:59.575612', '/myapp/index/contact/section', 'GET', NULL, '19');
+INSERT INTO `b_op_log` VALUES (3944, '172.18.0.1', '2025-09-28 20:46:39.577605', '/myapp/admin/news/list', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3945, '172.18.0.1', '2025-09-28 20:46:52.820833', '/myapp/admin/inquiry/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3946, '172.18.0.1', '2025-09-28 20:46:59.007021', '/myapp/admin/opLog/list', 'GET', NULL, '5');
+INSERT INTO `b_op_log` VALUES (3947, '172.18.0.1', '2025-09-28 20:47:01.512043', '/myapp/admin/user/list', 'GET', NULL, '4');
+INSERT INTO `b_op_log` VALUES (3948, '172.18.0.1', '2025-09-28 20:48:04.497414', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3949, '172.18.0.1', '2025-09-28 20:48:37.154308', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (3950, '172.18.0.1', '2025-09-28 20:48:37.157624', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (3951, '172.18.0.1', '2025-09-28 20:48:40.765085', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3952, '172.18.0.1', '2025-09-28 20:48:40.768352', '/myapp/index/thing/section', 'GET', NULL, '48');
+INSERT INTO `b_op_log` VALUES (3953, '172.18.0.1', '2025-09-28 20:48:44.754142', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (3954, '172.18.0.1', '2025-09-28 20:48:44.760561', '/myapp/index/thing/section', 'GET', NULL, '46');
+INSERT INTO `b_op_log` VALUES (3955, '172.18.0.1', '2025-09-28 20:48:46.494049', '/myapp/index/thing/section', 'GET', NULL, '37');
+INSERT INTO `b_op_log` VALUES (3956, '172.18.0.1', '2025-09-28 20:48:46.500423', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (3957, '172.18.0.1', '2025-09-28 20:48:56.586991', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3958, '172.18.0.5', '2025-09-28 20:49:10.880469', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3959, '172.18.0.1', '2025-09-28 20:49:10.897792', '/myapp/index/home/section', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (3960, '172.18.0.1', '2025-09-28 20:49:21.088630', '/myapp/admin/thing/list', 'GET', NULL, '16');
+INSERT INTO `b_op_log` VALUES (3961, '172.18.0.1', '2025-09-28 20:49:21.175290', '/myapp/admin/category/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3962, '172.18.0.1', '2025-09-28 20:49:21.840655', '/myapp/admin/category/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3963, '172.18.0.1', '2025-09-28 20:49:30.812246', '/myapp/admin/category/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3964, '172.18.0.1', '2025-09-28 20:49:34.352891', '/myapp/admin/category/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3965, '172.18.0.1', '2025-09-28 20:50:08.318579', '/myapp/admin/category/update', 'POST', NULL, '8');
+INSERT INTO `b_op_log` VALUES (3966, '172.18.0.1', '2025-09-28 20:50:08.336052', '/myapp/admin/category/list', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3967, '172.18.0.1', '2025-09-28 20:50:12.359253', '/myapp/admin/thing/list', 'GET', NULL, '15');
+INSERT INTO `b_op_log` VALUES (3968, '172.18.0.1', '2025-09-28 20:50:12.446267', '/myapp/admin/category/list', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (3969, '172.18.0.5', '2025-09-28 20:50:16.574047', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3970, '172.18.0.1', '2025-09-28 20:50:16.588427', '/myapp/index/home/section', 'GET', NULL, '17');
+INSERT INTO `b_op_log` VALUES (3971, '172.18.0.5', '2025-09-28 20:50:19.998889', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3972, '172.18.0.1', '2025-09-28 20:50:19.999373', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3973, '172.18.0.1', '2025-09-28 20:50:21.936408', '/myapp/index/thing/section', 'GET', NULL, '28');
+INSERT INTO `b_op_log` VALUES (3974, '172.18.0.1', '2025-09-28 20:50:21.943124', '/myapp/index/thing/section', 'GET', NULL, '34');
+INSERT INTO `b_op_log` VALUES (3975, '172.18.0.5', '2025-09-28 20:50:36.852824', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3976, '172.18.0.1', '2025-09-28 20:50:36.855516', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3977, '172.18.0.5', '2025-09-28 21:13:46.556464', '/myapp/index/common/section', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3978, '172.18.0.1', '2025-09-28 21:13:46.570720', '/myapp/index/home/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (3979, '172.18.0.1', '2025-09-28 21:16:22.804291', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3980, '172.18.0.5', '2025-09-28 21:16:22.811011', '/myapp/index/common/section', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (3981, '172.18.0.5', '2025-09-28 21:17:41.195649', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3982, '172.18.0.1', '2025-09-28 21:17:41.195799', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3983, '172.18.0.5', '2025-09-28 21:18:03.655108', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3984, '172.18.0.1', '2025-09-28 21:18:03.655156', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3985, '172.18.0.1', '2025-09-28 21:20:02.839123', '/myapp/index/thing/detail', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3986, '172.18.0.1', '2025-09-28 21:20:05.492057', '/myapp/index/contact/section', 'GET', NULL, '11');
+INSERT INTO `b_op_log` VALUES (3987, '172.18.0.1', '2025-09-28 21:20:11.046574', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (3988, '172.18.0.1', '2025-09-28 21:20:11.047827', '/myapp/index/thing/section', 'GET', NULL, '48');
+INSERT INTO `b_op_log` VALUES (3989, '172.18.0.1', '2025-09-28 21:20:19.738319', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (3990, '172.18.0.1', '2025-09-28 21:20:19.739116', '/myapp/index/thing/section', 'GET', NULL, '46');
+INSERT INTO `b_op_log` VALUES (3991, '172.18.0.1', '2025-09-28 21:20:34.091879', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3992, '172.18.0.1', '2025-09-28 21:21:00.981839', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3993, '172.18.0.5', '2025-09-28 21:21:00.984301', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3994, '172.18.0.1', '2025-09-28 21:24:13.531152', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3995, '172.18.0.5', '2025-09-28 21:24:13.537211', '/myapp/index/common/section', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (3996, '172.18.0.5', '2025-09-28 21:24:14.397583', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (3997, '172.18.0.1', '2025-09-28 21:24:14.416683', '/myapp/index/home/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (3998, '172.18.0.5', '2025-09-28 21:24:15.186309', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (3999, '172.18.0.1', '2025-09-28 21:24:15.186254', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4000, '172.18.0.5', '2025-09-28 21:24:43.273053', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4001, '172.18.0.1', '2025-09-28 21:24:43.274447', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4002, '172.18.0.1', '2025-09-28 21:26:17.860641', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4003, '172.18.0.1', '2025-09-28 21:27:25.216011', '/myapp/index/home/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (4004, '172.18.0.5', '2025-09-28 21:27:25.216170', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4005, '172.18.0.1', '2025-09-28 21:27:29.884253', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4006, '172.18.0.5', '2025-09-28 21:27:29.886904', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (4007, '172.18.0.1', '2025-09-28 21:27:36.496622', '/myapp/index/thing/section', 'GET', NULL, '47');
+INSERT INTO `b_op_log` VALUES (4008, '172.18.0.1', '2025-09-28 21:27:36.500356', '/myapp/index/thing/section', 'GET', NULL, '51');
+INSERT INTO `b_op_log` VALUES (4009, '172.18.0.1', '2025-09-28 21:27:40.767357', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (4010, '172.18.0.1', '2025-09-28 21:27:40.772535', '/myapp/index/thing/section', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (4011, '172.18.0.1', '2025-09-28 21:27:51.395162', '/myapp/admin/category/list', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (4012, '172.18.0.1', '2025-09-28 21:28:17.498801', '/myapp/admin/category/list', 'GET', NULL, '8');
+INSERT INTO `b_op_log` VALUES (4013, '172.18.0.1', '2025-09-28 21:28:21.047590', '/myapp/admin/thing/delete', 'POST', NULL, '7');
+INSERT INTO `b_op_log` VALUES (4014, '172.18.0.1', '2025-09-28 21:28:21.073770', '/myapp/admin/thing/list', 'GET', NULL, '16');
+INSERT INTO `b_op_log` VALUES (4015, '172.18.0.5', '2025-09-28 21:28:25.264264', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4016, '172.18.0.1', '2025-09-28 21:28:25.282132', '/myapp/index/thing/section', 'GET', NULL, '20');
+INSERT INTO `b_op_log` VALUES (4017, '172.18.0.1', '2025-09-28 21:28:25.285665', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (4018, '172.18.0.1', '2025-09-28 21:28:30.370082', '/myapp/index/thing/section', 'GET', NULL, '40');
+INSERT INTO `b_op_log` VALUES (4019, '172.18.0.1', '2025-09-28 21:28:30.372776', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (4020, '172.18.0.1', '2025-09-28 21:28:35.457149', '/myapp/index/thing/section', 'GET', NULL, '35');
+INSERT INTO `b_op_log` VALUES (4021, '172.18.0.1', '2025-09-28 21:28:35.465146', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (4022, '172.18.0.1', '2025-09-28 21:28:38.566011', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (4023, '172.18.0.1', '2025-09-28 21:28:38.567411', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (4024, '172.18.0.1', '2025-09-28 21:28:40.199548', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (4025, '172.18.0.1', '2025-09-28 21:28:40.205595', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (4026, '172.18.0.1', '2025-09-28 21:28:41.869964', '/myapp/index/thing/section', 'GET', NULL, '60');
+INSERT INTO `b_op_log` VALUES (4027, '172.18.0.1', '2025-09-28 21:28:41.875919', '/myapp/index/thing/section', 'GET', NULL, '66');
+INSERT INTO `b_op_log` VALUES (4028, '172.18.0.1', '2025-09-28 21:28:43.461523', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (4029, '172.18.0.1', '2025-09-28 21:28:43.468548', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (4030, '172.18.0.1', '2025-09-28 21:29:56.985738', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (4031, '172.18.0.1', '2025-09-28 21:29:56.986174', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (4032, '172.18.0.1', '2025-09-28 21:30:00.524619', '/myapp/index/thing/detail', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (4033, '172.18.0.1', '2025-09-28 21:30:12.663044', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4034, '172.18.0.1', '2025-09-28 21:30:19.444610', '/myapp/index/thing/section', 'GET', NULL, '18');
+INSERT INTO `b_op_log` VALUES (4035, '172.18.0.1', '2025-09-28 21:30:19.449069', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (4036, '172.18.0.1', '2025-09-28 21:30:21.978298', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (4037, '172.18.0.1', '2025-09-28 21:30:21.983974', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (4038, '172.18.0.1', '2025-09-28 21:30:23.961385', '/myapp/index/about/section', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (4039, '172.18.0.1', '2025-09-28 21:30:33.658453', '/myapp/index/thing/section', 'GET', NULL, '38');
+INSERT INTO `b_op_log` VALUES (4040, '172.18.0.1', '2025-09-28 21:30:33.665429', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (4041, '172.18.0.1', '2025-09-28 21:31:50.754703', '/myapp/index/about/section', 'GET', NULL, '9');
+INSERT INTO `b_op_log` VALUES (4042, '172.18.0.1', '2025-09-28 21:32:11.438821', '/myapp/index/contact/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4043, '172.18.0.5', '2025-09-28 21:32:11.445344', '/myapp/index/common/section', 'GET', NULL, '10');
+INSERT INTO `b_op_log` VALUES (4044, '172.18.0.1', '2025-09-28 21:32:20.327905', '/myapp/index/thing/section', 'GET', NULL, '46');
+INSERT INTO `b_op_log` VALUES (4045, '172.18.0.1', '2025-09-28 21:32:20.329606', '/myapp/index/thing/section', 'GET', NULL, '48');
+INSERT INTO `b_op_log` VALUES (4046, '172.18.0.1', '2025-09-28 21:32:36.107295', '/myapp/index/about/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4047, '172.18.0.1', '2025-09-28 21:32:39.307394', '/myapp/index/home/section', 'GET', NULL, '16');
+INSERT INTO `b_op_log` VALUES (4048, '172.18.0.1', '2025-09-28 21:32:41.657533', '/myapp/index/contact/section', 'GET', NULL, '12');
+INSERT INTO `b_op_log` VALUES (4049, '172.18.0.1', '2025-09-28 21:32:50.519962', '/myapp/index/thing/section', 'GET', NULL, '43');
+INSERT INTO `b_op_log` VALUES (4050, '172.18.0.1', '2025-09-28 21:32:50.520910', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (4051, '172.18.0.1', '2025-09-28 21:32:56.768074', '/myapp/index/thing/section', 'GET', NULL, '32');
+INSERT INTO `b_op_log` VALUES (4052, '172.18.0.1', '2025-09-28 21:32:56.780280', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (4053, '172.18.0.1', '2025-09-28 21:32:59.162391', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (4054, '172.18.0.5', '2025-09-28 21:33:02.256805', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (4055, '172.18.0.1', '2025-09-28 21:33:02.288218', '/myapp/index/thing/section', 'GET', NULL, '33');
+INSERT INTO `b_op_log` VALUES (4056, '172.18.0.1', '2025-09-28 21:33:02.296045', '/myapp/index/thing/section', 'GET', NULL, '40');
+INSERT INTO `b_op_log` VALUES (4057, '172.18.0.1', '2025-09-28 21:33:05.266367', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (4058, '172.18.0.5', '2025-09-28 21:33:13.424250', '/myapp/index/common/section', 'GET', NULL, '0');
+INSERT INTO `b_op_log` VALUES (4059, '172.18.0.1', '2025-09-28 21:33:13.426057', '/myapp/index/home/section', 'GET', NULL, '2');
+INSERT INTO `b_op_log` VALUES (4060, '172.18.0.1', '2025-09-28 21:33:24.853552', '/myapp/index/thing/section', 'GET', NULL, '33');
+INSERT INTO `b_op_log` VALUES (4061, '172.18.0.1', '2025-09-28 21:33:24.859603', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (4062, '172.18.0.1', '2025-09-28 21:33:28.563604', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (4063, '172.18.0.1', '2025-09-28 21:33:28.566428', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (4064, '172.18.0.1', '2025-09-28 21:33:33.128257', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (4065, '172.18.0.1', '2025-09-28 21:33:33.132409', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (4066, '172.18.0.1', '2025-09-28 21:33:33.743107', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (4067, '172.18.0.1', '2025-09-28 21:33:33.743180', '/myapp/index/thing/section', 'GET', NULL, '22');
+INSERT INTO `b_op_log` VALUES (4068, '172.18.0.5', '2025-09-28 21:33:39.523234', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4069, '172.18.0.1', '2025-09-28 21:33:39.548559', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (4070, '172.18.0.1', '2025-09-28 21:33:39.556378', '/myapp/index/thing/section', 'GET', NULL, '31');
+INSERT INTO `b_op_log` VALUES (4071, '172.18.0.5', '2025-09-28 21:33:41.904992', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4072, '172.18.0.1', '2025-09-28 21:33:41.910393', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4073, '172.18.0.1', '2025-09-28 21:33:44.871632', '/myapp/index/thing/section', 'GET', NULL, '41');
+INSERT INTO `b_op_log` VALUES (4074, '172.18.0.1', '2025-09-28 21:33:44.874962', '/myapp/index/thing/section', 'GET', NULL, '44');
+INSERT INTO `b_op_log` VALUES (4075, '172.18.0.5', '2025-09-28 21:35:02.568369', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4076, '172.18.0.1', '2025-09-28 21:35:02.587779', '/myapp/index/thing/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (4077, '172.18.0.1', '2025-09-28 21:35:02.592296', '/myapp/index/thing/section', 'GET', NULL, '26');
+INSERT INTO `b_op_log` VALUES (4078, '172.18.0.1', '2025-09-28 21:35:22.573833', '/myapp/index/thing/section', 'GET', NULL, '31');
+INSERT INTO `b_op_log` VALUES (4079, '172.18.0.1', '2025-09-28 21:35:22.583649', '/myapp/index/thing/section', 'GET', NULL, '40');
+INSERT INTO `b_op_log` VALUES (4080, '172.18.0.1', '2025-09-28 21:36:12.131343', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4081, '172.18.0.1', '2025-09-28 21:38:00.047967', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4082, '172.18.0.5', '2025-09-28 21:38:00.048015', '/myapp/index/common/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4083, '172.18.0.1', '2025-09-28 21:39:24.298298', '/myapp/index/home/section', 'GET', NULL, '1');
+INSERT INTO `b_op_log` VALUES (4084, '172.18.0.1', '2025-09-28 21:39:27.156646', '/myapp/index/thing/section', 'GET', NULL, '31');
+INSERT INTO `b_op_log` VALUES (4085, '172.18.0.1', '2025-09-28 21:39:27.163881', '/myapp/index/thing/section', 'GET', NULL, '36');
+INSERT INTO `b_op_log` VALUES (4086, '172.18.0.1', '2025-09-28 21:39:30.398735', '/myapp/index/thing/section', 'GET', NULL, '39');
+INSERT INTO `b_op_log` VALUES (4087, '172.18.0.1', '2025-09-28 21:39:30.406168', '/myapp/index/thing/section', 'GET', NULL, '46');
+INSERT INTO `b_op_log` VALUES (4088, '172.18.0.1', '2025-09-28 21:39:37.933109', '/myapp/index/thing/section', 'GET', NULL, '21');
+INSERT INTO `b_op_log` VALUES (4089, '172.18.0.1', '2025-09-28 21:39:37.938626', '/myapp/index/thing/section', 'GET', NULL, '27');
+INSERT INTO `b_op_log` VALUES (4090, '172.18.0.1', '2025-09-28 21:39:40.347108', '/myapp/index/thing/section', 'GET', NULL, '23');
+INSERT INTO `b_op_log` VALUES (4091, '172.18.0.1', '2025-09-28 21:39:40.348233', '/myapp/index/thing/section', 'GET', NULL, '24');
+INSERT INTO `b_op_log` VALUES (4092, '172.18.0.1', '2025-09-28 21:39:44.856815', '/myapp/index/thing/section', 'GET', NULL, '42');
+INSERT INTO `b_op_log` VALUES (4093, '172.18.0.1', '2025-09-28 21:39:44.859995', '/myapp/index/thing/section', 'GET', NULL, '45');
+INSERT INTO `b_op_log` VALUES (4094, '172.18.0.1', '2025-09-28 21:40:00.785934', '/myapp/index/home/section', 'GET', NULL, '1');
 
 -- ----------------------------
 -- Table structure for b_thing
 -- ----------------------------
 DROP TABLE IF EXISTS `b_thing`;
 CREATE TABLE `b_thing`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `cover` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `price` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(6) NULL DEFAULT NULL,
-  `pv` int(11) NOT NULL,
-  `rate` int(11) NOT NULL,
-  `category_id` bigint(20) NULL DEFAULT NULL,
+  `pv` int NOT NULL,
+  `rate` int NOT NULL,
+  `category_id` bigint NULL DEFAULT NULL,
   `summary` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `seo_description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `seo_keywords` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -736,7 +1310,7 @@ CREATE TABLE `b_thing`  (
   `properties` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dimension` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `b_thing_category_id_d2a29cf0_fk_b_category_id`(`category_id`) USING BTREE,
+  INDEX `b_thing_category_id_d2a29cf0_fk_b_category_id`(`category_id` ASC) USING BTREE,
   CONSTRAINT `b_thing_category_id_d2a29cf0_fk_b_category_id` FOREIGN KEY (`category_id`) REFERENCES `b_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -755,14 +1329,13 @@ INSERT INTO `b_thing` VALUES (36, 'Active Flex Path', '1745462508547.jpg', '<p s
 INSERT INTO `b_thing` VALUES (37, 'classic product', '1745462520685.jpg', '<p style=\"text-align: start;\">The EcoPure Water Bottle stands out due to its thoughtfully engineered design. With a sleek and modern silhouette, this bottle fits comfortably in hand, backpack side pockets, or car cup holders. Made from high-grade, BPA-free stainless steel, it guarantees durability and resistance to rust and stains. Whether you’re heading to the office, gym, school, or embarking on a weekend hike, the EcoPure Water Bottle is your reliable hydration companion.</p><p style=\"text-align: start;\">A unique double-walled vacuum insulation technology keeps beverages cold for up to 24 hours or hot for up to 12 hours. Busy commuters and students can enjoy ice-cold water all day or sip hot coffee during early morning classes. The wide-mouth opening enables effortless cleaning and allows you to easily add ice or fruit slices for fresh, flavoured hydration.</p><p style=\"text-align: start;\"><strong>Eco-Friendly Materials and Recyclability</strong></p><p style=\"text-align: start;\">Sustainability is at the heart of the EcoPure brand. Each water bottle is crafted using 100% recyclable materials, from the stainless steel body to the food-grade silicone leak-proof lid. By choosing EcoPure, consumers reduce their reliance on single-use plastics, helping to keep our rivers and oceans cleaner. Our bottles are not just reusable but also built to last for years, further minimizing environmental footprint.</p><p style=\"text-align: start;\">For environmentally conscious exporters and e-commerce businesses, EcoPure Water Bottles align perfectly with growing consumer demand for sustainable goods. Our minimalist and recyclable packaging also reduces waste during shipping and handling, supporting greener supply chains.</p><p style=\"text-align: start;\"><strong>Safe, Healthy, and Odor-Free</strong></p><p style=\"text-align: start;\">EcoPure Water Bottles are rigorously tested to ensure safety for daily use. The interior does not retain flavors or odors, so every refill is as pure as the first. Unlike plastic bottles, our stainless steel material is free from harmful chemicals, ensuring your drinks stay fresh and uncontaminated. The food-safe, BPA-free lid with a silicone gasket prevents leaks and spills, making it easy to carry in bags or backpacks without worry.</p><p style=\"text-align: start;\"><strong>Designed for Global Appeal</strong></p><p style=\"text-align: start;\">We understand that international shoppers seek products that combine style and practicality. The EcoPure Water Bottle is available in a range of fashionable colors and sizes, from a compact 350ml version for kids to a large 1L bottle for athletes. Custom logo printing offers additional branding opportunities for corporate gifts or promotional campaigns.</p><p style=\"text-align: start;\">Through our dedicated e-commerce platform, we provide seamless purchasing experiences for customers around the globe. With multilingual customer service, secure payment options, and worldwide shipping, international buyers can easily enjoy the EcoPure difference.</p><p style=\"text-align: start;\"><strong>Easy Care and Maintenance</strong></p><p style=\"text-align: start;\">Maintaining your EcoPure Water Bottle is effortless. The wide mouth design allows for easy handwashing, and the bottle is dishwasher-safe for added convenience. Each purchase includes a detailed care guide to ensure optimal bottle longevity and hygiene.</p><p style=\"text-align: start;\"><strong>Commitment to Social Responsibility</strong></p><p style=\"text-align: start;\">EcoPure is not only invested in environmental sustainability but also in making a positive social impact. A portion of our profits supports clean water initiatives in underserved communities. By purchasing an EcoPure Water Bottle, customers contribute to safe drinking water projects worldwide.</p><p style=\"text-align: start;\"><strong>Endorsements and Customer Reviews</strong></p><p style=\"text-align: start;\">The EcoPure Water Bottle has already gained positive reviews from outdoor enthusiasts, athletes, students, and families. Customers praise its ability to keep drinks at the perfect temperature, its lightweight portability, and the stylish designs that suit every personality.</p>', '', '0', '2025-04-24 10:42:01.789771', 0, 3, 42, 'Discover a perfect blend of quality, innovation, and value with our latest product, designed to enhance your daily life. Carefully crafted using premium materials, it offers outstanding performance, reliability, and durability. Its user-friendly features ensure easy operation for both beginners and experts, making it an ideal choice for homes, offices, and on-the-go lifestyles. The contemporary design seamlessly integrates with any environment.', '', '', '', '[{\"name\":\"Height\",\"value\":\"19cm\"},{\"name\":\"Weight\",\"value\":\"0.25kg\"},{\"name\":\"Color\",\"value\":\"Light\"}]', 'Feature');
 INSERT INTO `b_thing` VALUES (38, 'Swift Energy Pace Good Swift Energy Swift Energy Pace Swift Energy', '1745462532757.jpg', '<p style=\"text-align: start;\">The EcoPure Water Bottle stands out due to its thoughtfully engineered design. With a sleek and modern silhouette, this bottle fits comfortably in hand, backpack side pockets, or car cup holders. Made from high-grade, BPA-free stainless steel, it guarantees durability and resistance to rust and stains. Whether you’re heading to the office, gym, school, or embarking on a weekend hike, the EcoPure Water Bottle is your reliable hydration companion.</p><p style=\"text-align: start;\">A unique double-walled vacuum insulation technology keeps beverages cold for up to 24 hours or hot for up to 12 hours. Busy commuters and students can enjoy ice-cold water all day or sip hot coffee during early morning classes. The wide-mouth opening enables effortless cleaning and allows you to easily add ice or fruit slices for fresh, flavoured hydration.</p><p style=\"text-align: start;\"><strong>Eco-Friendly Materials and Recyclability</strong></p><p style=\"text-align: start;\">Sustainability is at the heart of the EcoPure brand. Each water bottle is crafted using 100% recyclable materials, from the stainless steel body to the food-grade silicone leak-proof lid. By choosing EcoPure, consumers reduce their reliance on single-use plastics, helping to keep our rivers and oceans cleaner. Our bottles are not just reusable but also built to last for years, further minimizing environmental footprint.</p><p style=\"text-align: start;\">For environmentally conscious exporters and e-commerce businesses, EcoPure Water Bottles align perfectly with growing consumer demand for sustainable goods. Our minimalist and recyclable packaging also reduces waste during shipping and handling, supporting greener supply chains.</p><p style=\"text-align: start;\"><strong>Safe, Healthy, and Odor-Free</strong></p><p style=\"text-align: start;\">EcoPure Water Bottles are rigorously tested to ensure safety for daily use. The interior does not retain flavors or odors, so every refill is as pure as the first. Unlike plastic bottles, our stainless steel material is free from harmful chemicals, ensuring your drinks stay fresh and uncontaminated. The food-safe, BPA-free lid with a silicone gasket prevents leaks and spills, making it easy to carry in bags or backpacks without worry.</p><p style=\"text-align: start;\"><strong>Designed for Global Appeal</strong></p><p style=\"text-align: start;\">We understand that international shoppers seek products that combine style and practicality. The EcoPure Water Bottle is available in a range of fashionable colors and sizes, from a compact 350ml version for kids to a large 1L bottle for athletes. Custom logo printing offers additional branding opportunities for corporate gifts or promotional campaigns.</p><p style=\"text-align: start;\">Through our dedicated e-commerce platform, we provide seamless purchasing experiences for customers around the globe. With multilingual customer service, secure payment options, and worldwide shipping, international buyers can easily enjoy the EcoPure difference.</p><p style=\"text-align: start;\"><strong>Easy Care and Maintenance</strong></p><p style=\"text-align: start;\">Maintaining your EcoPure Water Bottle is effortless. The wide mouth design allows for easy handwashing, and the bottle is dishwasher-safe for added convenience. Each purchase includes a detailed care guide to ensure optimal bottle longevity and hygiene.</p><p style=\"text-align: start;\"><strong>Commitment to Social Responsibility</strong></p><p style=\"text-align: start;\">EcoPure is not only invested in environmental sustainability but also in making a positive social impact. A portion of our profits supports clean water initiatives in underserved communities. By purchasing an EcoPure Water Bottle, customers contribute to safe drinking water projects worldwide.</p><p style=\"text-align: start;\"><strong>Endorsements and Customer Reviews</strong></p><p style=\"text-align: start;\">The EcoPure Water Bottle has already gained positive reviews from outdoor enthusiasts, athletes, students, and families. Customers praise its ability to keep drinks at the perfect temperature, its lightweight portability, and the stylish designs that suit every personality.</p>', '', '0', '2025-04-24 10:42:13.689086', 0, 3, 43, 'Discover a perfect blend of quality, innovation, and value with our latest product, designed to enhance your daily life. Carefully crafted using premium materials, it offers outstanding performance, reliability, and durability. Its user-friendly features ensure easy operation for both beginners and experts, making it an ideal choice for homes, offices, and on-the-go lifestyles. The contemporary design seamlessly integrates with any environment.', '', '', '', '[{\"name\":\"Height\",\"value\":\"19cm\"},{\"name\":\"Weight\",\"value\":\"0.25kg\"},{\"name\":\"Color\",\"value\":\"Light\"}]', '');
 INSERT INTO `b_thing` VALUES (39, 'Dreamy Nights Dog My Nights Duvet', '1745462544431.jpg#1745891764973.jpg', '<p style=\"text-align: start;\">The EcoPure Water Bottle stands out due to its thoughtfully engineered design. With a sleek and modern silhouette, this bottle fits comfortably in hand, backpack side pockets, or car cup holders. Made from high-grade, BPA-free stainless steel, it guarantees durability and resistance to rust and stains. Whether you’re heading to the office, gym, school, or embarking on a weekend hike, the EcoPure Water Bottle is your reliable hydration companion.</p><p style=\"text-align: start;\">A unique double-walled vacuum insulation technology keeps beverages cold for up to 24 hours or hot for up to 12 hours. Busy commuters and students can enjoy ice-cold water all day or sip hot coffee during early morning classes. The wide-mouth opening enables effortless cleaning and allows you to easily add ice or fruit slices for fresh, flavoured hydration.</p><p style=\"text-align: start;\"><strong>Eco-Friendly Materials and Recyclability</strong></p><p style=\"text-align: start;\">Sustainability is at the heart of the EcoPure brand. Each water bottle is crafted using 100% recyclable materials, from the stainless steel body to the food-grade silicone leak-proof lid. By choosing EcoPure, consumers reduce their reliance on single-use plastics, helping to keep our rivers and oceans cleaner. Our bottles are not just reusable but also built to last for years, further minimizing environmental footprint.</p><p style=\"text-align: start;\">For environmentally conscious exporters and e-commerce businesses, EcoPure Water Bottles align perfectly with growing consumer demand for sustainable goods. Our minimalist and recyclable packaging also reduces waste during shipping and handling, supporting greener supply chains.</p><p style=\"text-align: start;\"><strong>Safe, Healthy, and Odor-Free</strong></p><p style=\"text-align: start;\">EcoPure Water Bottles are rigorously tested to ensure safety for daily use. The interior does not retain flavors or odors, so every refill is as pure as the first. Unlike plastic bottles, our stainless steel material is free from harmful chemicals, ensuring your drinks stay fresh and uncontaminated. The food-safe, BPA-free lid with a silicone gasket prevents leaks and spills, making it easy to carry in bags or backpacks without worry.</p><p style=\"text-align: start;\"><strong>Designed for Global Appeal</strong></p><p style=\"text-align: start;\">We understand that international shoppers seek products that combine style and practicality. The EcoPure Water Bottle is available in a range of fashionable colors and sizes, from a compact 350ml version for kids to a large 1L bottle for athletes. Custom logo printing offers additional branding opportunities for corporate gifts or promotional campaigns.</p><p style=\"text-align: start;\">Through our dedicated e-commerce platform, we provide seamless purchasing experiences for customers around the globe. With multilingual customer service, secure payment options, and worldwide shipping, international buyers can easily enjoy the EcoPure difference.</p><p style=\"text-align: start;\"><strong>Easy Care and Maintenance</strong></p><p style=\"text-align: start;\">Maintaining your EcoPure Water Bottle is effortless. The wide mouth design allows for easy handwashing, and the bottle is dishwasher-safe for added convenience. Each purchase includes a detailed care guide to ensure optimal bottle longevity and hygiene.</p><p style=\"text-align: start;\"><strong>Commitment to Social Responsibility</strong></p><p style=\"text-align: start;\">EcoPure is not only invested in environmental sustainability but also in making a positive social impact. A portion of our profits supports clean water initiatives in underserved communities. By purchasing an EcoPure Water Bottle, customers contribute to safe drinking water projects worldwide.</p><p style=\"text-align: start;\"><strong>Endorsements and Customer Reviews</strong></p><p style=\"text-align: start;\">The EcoPure Water Bottle has already gained positive reviews from outdoor enthusiasts, athletes, students, and families. Customers praise its ability to keep drinks at the perfect temperature, its lightweight portability, and the stylish designs that suit every personality.</p>', '$158.00', '0', '2025-04-24 10:42:25.275677', 0, 3, 45, 'Discover a perfect blend of quality, innovation, and value with our latest product, designed to enhance your daily life. Carefully crafted using premium materials, it offers outstanding performance, reliability, and durability. Its user-friendly features ensure easy operation for both beginners and experts, making it an ideal choice for homes, offices, and on-the-go lifestyles. The contemporary design seamlessly integrates with any environment.', 'Test Active Venture', 'test', 'Test Active Venture', '[{\"name\":\"Height\",\"value\":\"19cm\"},{\"name\":\"Weight\",\"value\":\"0.25kg\"},{\"name\":\"Color\",\"value\":\"Light\"}]', 'Recommend,Feature');
-INSERT INTO `b_thing` VALUES (41, '测试商品测试商品测试商品测试商品测试商品', '1748226242704.jpeg', '<p style=\"text-align: start;\">A unique double-walled vacuum insulation technology keeps beverages cold for up to 24 hours or hot for up to 12 hours. Busy commuters and students can enjoy ice-cold water all day or sip hot coffee during early morning classes. The wide-mouth opening enables effortless cleaning and allows you to easily add ice or fruit slices for fresh, flavoured hydration.</p><p style=\"text-align: start;\"><strong>Eco-Friendly Materials and Recyclability</strong></p><p style=\"text-align: start;\">Sustainability is at the heart of the EcoPure brand. Each water bottle is crafted using 100% recyclable materials, from the stainless steel body to the food-grade silicone leak-proof lid. By choosing EcoPure, consumers reduce their reliance on single-use plastics, helping to keep our rivers and oceans cleaner. Our bottles are not just reusable but also built to last for years, further minimizing environmental footprint.</p><p style=\"text-align: start;\">For environmentally conscious exporters and e-commerce businesses, EcoPure Water Bottles align perfectly with growing consumer demand for sustainable goods. Our minimalist and recyclable packaging also reduces waste during shipping and handling, supporting greener supply chains.</p><p style=\"text-align: start;\"><strong>Safe, Healthy, and Odor-Free</strong></p><p style=\"text-align: start;\">EcoPure Water Bottles are rigorously tested to ensure safety for daily use. The interior does not retain flavors or odors, so every refill is as pure as the first. Unlike plastic bottles, our stainless steel material is free from harmful chemicals, ensuring your drinks stay fresh and uncontaminated. The food-safe, BPA-free lid with a silicone gasket prevents leaks and spills, making it easy to carry in bags or backpacks without worry.</p><p style=\"text-align: start;\"><strong>Designed for Global Appeal</strong></p><p style=\"text-align: start;\">We understand that international shoppers seek products that combine style and practicality. The EcoPure Water Bottle is available in a range of fashionable colors and sizes, from a compact 350ml version for kids to a large 1L bottle for athletes. Custom logo printing offers additional branding opportunities for corporate gifts or promotional campaigns.</p><p style=\"text-align: start;\">Through our dedicated e-commerce platform, we provide seamless purchasing experiences for customers around the globe. With multilingual customer service, secure payment options, and worldwide shipping, international buyers can easily enjoy the EcoPure difference.</p>', '$90', '0', '2025-05-26 10:24:05.766496', 0, 3, 40, 'This is remark. Discover a perfect blend of quality, innovation, and value with our latest product, designed to enhance your daily life. Carefully crafted using premium materials, it offers outstanding performance, reliability, and durability. Its user-friendly features ensure easy operation for both beginners and experts, making it an ideal choice for homes, offices, and on-the-go lifestyles. The contemporary design seamlessly integrates with any environment.', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for b_user
 -- ----------------------------
 DROP TABLE IF EXISTS `b_user`;
 CREATE TABLE `b_user`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `role` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -784,24 +1357,24 @@ CREATE TABLE `b_user`  (
 INSERT INTO `b_user` VALUES (15, 'admin111', 'c0ce70cfec1aacd2837c491aea1f5e72', '1', '0', NULL, NULL, NULL, NULL, '2025-03-27 10:41:47.208154', 'be73dc828dd0a29015f46826be353de4', NULL, '1750210254545');
 INSERT INTO `b_user` VALUES (17, 'test', 'd1b7fa61d8078d10dd59f70bb526c04c', '3', '0', NULL, NULL, NULL, NULL, '2025-04-30 10:00:48.252369', 'c85d5dc35ea03d20ebfcf50ff08d8ed3', NULL, '1747230024341');
 INSERT INTO `b_user` VALUES (19, 'test2', 'af9a925e89c33993213aa983af348a7b', '3', '0', NULL, NULL, NULL, NULL, '2025-06-10 10:04:58.603713', NULL, NULL, NULL);
-INSERT INTO `b_user` VALUES (20, 'admin', 'bbe926801b93618cbe1548684a3de3f9', '1', '0', NULL, NULL, NULL, NULL, '2025-06-10 10:05:30.228003', NULL, NULL, NULL);
+INSERT INTO `b_user` VALUES (20, 'admin', '9be0ded4b62c84780c2882a60a6191c7', '1', '0', NULL, NULL, NULL, NULL, '2025-06-10 10:05:30.228003', '5b122b9ebe96b1277cc0a56636648d8c', NULL, '1759147884164');
 
 -- ----------------------------
 -- Table structure for django_admin_log
 -- ----------------------------
 DROP TABLE IF EXISTS `django_admin_log`;
 CREATE TABLE `django_admin_log`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `action_time` datetime(6) NOT NULL,
   `object_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `object_repr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `action_flag` smallint(5) UNSIGNED NOT NULL,
+  `action_flag` smallint UNSIGNED NOT NULL,
   `change_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `content_type_id` int(11) NULL DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
+  `content_type_id` int NULL DEFAULT NULL,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `django_admin_log_content_type_id_c4bce8eb_fk_django_co`(`content_type_id`) USING BTREE,
-  INDEX `django_admin_log_user_id_c564eba6_fk_auth_user_id`(`user_id`) USING BTREE,
+  INDEX `django_admin_log_content_type_id_c4bce8eb_fk_django_co`(`content_type_id` ASC) USING BTREE,
+  INDEX `django_admin_log_user_id_c564eba6_fk_auth_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -815,11 +1388,11 @@ CREATE TABLE `django_admin_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE `django_content_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `app_label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `model` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq`(`app_label`, `model`) USING BTREE
+  UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq`(`app_label` ASC, `model` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -855,7 +1428,7 @@ INSERT INTO `django_content_type` VALUES (6, 'sessions', 'session');
 -- ----------------------------
 DROP TABLE IF EXISTS `django_migrations`;
 CREATE TABLE `django_migrations`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `app` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
@@ -935,7 +1508,7 @@ CREATE TABLE `django_session`  (
   `session_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`) USING BTREE,
-  INDEX `django_session_expire_date_a5c62663`(`expire_date`) USING BTREE
+  INDEX `django_session_expire_date_a5c62663`(`expire_date` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
