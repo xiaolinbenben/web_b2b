@@ -1,0 +1,82 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      TZ: Asia/Shanghai
+      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      FRONT_IMAGE_NAME: web_b2b
+      BACK_IMAGE_NAME: web_b2b-server
+      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+      NEXT_PUBLIC_DJANGO_BASE_URL: ${{ secrets.NEXT_PUBLIC_DJANGO_BASE_URL }}
+      NEXT_PUBLIC_BASE_PATH: ${{ secrets.NEXT_PUBLIC_BASE_PATH || '' }}
+      NEXT_PUBLIC_IMAGE_DOMAINS: ${{ secrets.NEXT_PUBLIC_IMAGE_DOMAINS }}
+      NEXT_PUBLIC_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_TEMPLATE_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set image tag
+        run: echo "TAG=$(date +%Y%m%d)-${{ github.run_number }}" >> "$GITHUB_ENV"
+
+      - name: Log in to Docker Hub
+        if: ${{ github.event_name == 'push' }}
+        run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+
+      - name: Build backend image
+        run: |
+          docker build ./server \
+            -t "${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:${TAG}"
+
+      - name: Build frontend image
+        run: |
+          FRONT_BASE_URL=${NEXT_PUBLIC_BASE_URL:-}
+          FRONT_DJANGO_URL=${NEXT_PUBLIC_DJANGO_BASE_URL:-}
+          FRONT_BASE_PATH=${NEXT_PUBLIC_BASE_PATH:-}
+          FRONT_IMAGE_DOMAINS=${NEXT_PUBLIC_IMAGE_DOMAINS:-}
+          FRONT_TEMPLATE_ID=${NEXT_PUBLIC_TEMPLATE_ID:-001}
+
+          docker build ./web \
+            --build-arg NEXT_PUBLIC_BASE_URL="${FRONT_BASE_URL}" \
+            --build-arg NEXT_PUBLIC_DJANGO_BASE_URL="${FRONT_DJANGO_URL}" \
+            --build-arg NEXT_PUBLIC_BASE_PATH="${FRONT_BASE_PATH}" \
+            --build-arg NEXT_PUBLIC_IMAGE_DOMAINS="${FRONT_IMAGE_DOMAINS}" \
+            --build-arg NEXT_PUBLIC_TEMPLATE_ID="${FRONT_TEMPLATE_ID}" \
+            -t "${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:${TAG}"
+
+      - name: Tag and push backend image
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          docker tag "${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:${TAG}" \
+                     "${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:latest"
+
+          docker push "${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:${TAG}"
+          docker push "${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:latest"
+
+      - name: Tag and push frontend image
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          docker tag "${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:${TAG}" \
+                     "${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:latest"
+
+          docker push "${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:${TAG}"
+          docker push "${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:latest"
+
+      - name: Show pushed images
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "✅ Backend:"
+          echo " - ${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:${TAG}"
+          echo " - ${DOCKERHUB_USER}/${BACK_IMAGE_NAME}:latest"
+          echo "✅ Frontend:"
+          echo " - ${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:${TAG}"
+          echo " - ${DOCKERHUB_USER}/${FRONT_IMAGE_NAME}:latest"
