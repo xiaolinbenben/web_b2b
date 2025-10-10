@@ -1,0 +1,6 @@
+services:
+  web-b2b-backend:
+    image: beisitech/web_b2b-server:latest
+
+  web-b2b-frontend:
+    image: beisitech/web_b2b:latest

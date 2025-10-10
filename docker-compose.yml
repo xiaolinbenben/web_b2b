@@ -1,8 +1,6 @@
 services:
   web-b2b-backend:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    # 后端镜像的构建方式请通过 docker-compose.dev.yml / docker-compose.prod.yml 控制
     env_file:
       - .env/.env.common
       - ${ENV_FILE:-.env/.env.dev}
@@ -15,15 +13,7 @@ services:
       - beisi-shared-network
 
   web-b2b-frontend:
-    build:
-      context: ./web
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
-        NEXT_PUBLIC_DJANGO_BASE_URL: ${NEXT_PUBLIC_DJANGO_BASE_URL}
-        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH}
-        NEXT_PUBLIC_IMAGE_DOMAINS: ${NEXT_PUBLIC_IMAGE_DOMAINS}
-        NEXT_PUBLIC_TEMPLATE_ID: ${NEXT_PUBLIC_TEMPLATE_ID}
+    # 前端镜像的构建方式请通过 docker-compose.dev.yml / docker-compose.prod.yml 控制
     env_file:
       - .env/.env.common
       - ${ENV_FILE:-.env/.env.dev}

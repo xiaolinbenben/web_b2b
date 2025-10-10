@@ -1,0 +1,16 @@
+services:
+  web-b2b-backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+
+  web-b2b-frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+        NEXT_PUBLIC_DJANGO_BASE_URL: ${NEXT_PUBLIC_DJANGO_BASE_URL}
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH}
+        NEXT_PUBLIC_IMAGE_DOMAINS: ${NEXT_PUBLIC_IMAGE_DOMAINS}
+        NEXT_PUBLIC_TEMPLATE_ID: ${NEXT_PUBLIC_TEMPLATE_ID}

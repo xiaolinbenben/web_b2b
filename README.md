@@ -112,7 +112,7 @@ npm run start
 
 ## Docker Compose 使用
 
-- `docker compose --env-file .env/.env.dev up -d --build`
-- `docker compose --env-file .env/.env.prod up -d --build`
-- `docker compose --env-file .env/.env.dev down`
-- `docker compose --env-file .env/.env.prod down`
+- 本地构建并测试镜像：`docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env/.env.common --env-file .env/.env.dev up -d --build`
+- 停止本地服务：`docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env/.env.common --env-file .env/.env.dev down`
+- 生产环境拉取镜像运行：`docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env/.env.common --env-file .env/.env.prod up -d`
+- 停止生产环境容器：`docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env/.env.common --env-file .env/.env.prod down`
