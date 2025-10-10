@@ -4,7 +4,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     env_file:
-      - ${ENV_FILE:-env.local}
+      - ${ENV_FILE:-env.dev}
     environment:
       DJANGO_DEBUG: ${DJANGO_DEBUG:-false}
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
@@ -36,7 +36,7 @@ services:
         NEXT_PUBLIC_IMAGE_DOMAINS: ${NEXT_PUBLIC_IMAGE_DOMAINS:-localhost}
         NEXT_PUBLIC_TEMPLATE_ID: ${NEXT_PUBLIC_TEMPLATE_ID:-001}
     env_file:
-      - ${ENV_FILE:-env.local}
+      - ${ENV_FILE:-env.dev}
     environment:
       NODE_ENV: production
       PORT: ${NEXT_PORT:-80}
