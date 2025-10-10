@@ -4,8 +4,8 @@ services:
       context: ./server
       dockerfile: Dockerfile
     env_file:
-      - -./env/.env.common
-      - ${ENV_FILE:-./env/.env.dev}
+      - .env/.env.common
+      - ${ENV_FILE:-.env/.env.dev}
     volumes:
       - ./server/upload:/app/upload
     expose:
@@ -25,8 +25,8 @@ services:
         NEXT_PUBLIC_IMAGE_DOMAINS: ${NEXT_PUBLIC_IMAGE_DOMAINS}
         NEXT_PUBLIC_TEMPLATE_ID: ${NEXT_PUBLIC_TEMPLATE_ID}
     env_file:
-      - -./env/.env.common
-      - ${ENV_FILE:-./env/.env.dev}
+      - .env/.env.common
+      - ${ENV_FILE:-.env/.env.dev}
     expose:
       - "80"
     restart: unless-stopped
