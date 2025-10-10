@@ -1,0 +1,11 @@
+# Environment configuration files
+.env
+*.env
+.env.*
+*.env.*
+
+# Keep example env templates tracked
+!*.example
+!*.env.example
+!*.env.*.example
+!**/*.example
