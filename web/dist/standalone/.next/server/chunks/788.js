@@ -1,1 +1,0 @@
-"use strict";exports.id=788,exports.ids=[788],exports.modules={10788:(s,d,e)=>{e.r(d),e.d(d,{default:()=>l});var t=e(19510),a=e(98962),r=e(91478);function l({bannerData:s,downloadData:d}){return(0,t.jsxs)("div",{children:[t.jsx("div",{className:"w-full h-[200px]",children:t.jsx(r.Z,{title:"Download",bannerData:s})}),t.jsx(a.Z,{downloadData:d})]})}}};
